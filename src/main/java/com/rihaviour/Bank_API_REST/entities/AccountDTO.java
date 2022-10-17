@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class AccountDTO {
 
     @NotNull
-    private Double balance;
+    private Money balance;
 
     @NotNull
     @NotBlank
@@ -18,13 +18,13 @@ public class AccountDTO {
 
     private String secondaryOwnerUsername;
 
-    public AccountDTO(Double balance, String primaryOwnerUsername, String secondaryOwnerUsername) {
+    public AccountDTO(Money balance, String primaryOwnerUsername, String secondaryOwnerUsername) {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
         this.secondaryOwnerUsername = secondaryOwnerUsername;
     }
 
-    public AccountDTO(Double balance, String primaryOwnerUsername) {
+    public AccountDTO(Money balance, String primaryOwnerUsername) {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
     }
@@ -32,11 +32,11 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public Double getBalance() {
+    public Money getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(Money balance) {
         this.balance = balance;
     }
 

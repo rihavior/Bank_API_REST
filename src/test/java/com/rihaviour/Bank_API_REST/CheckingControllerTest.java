@@ -75,7 +75,7 @@ public class CheckingControllerTest {
     @Test
     @DisplayName("Creates checking when 2 Owners are provided.")
     void createChecking_WithTwoOwners() throws Exception {
-        AccountDTO accountDTO = new AccountDTO(1000D, primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
 
         String body = objectMapper.writeValueAsString(accountDTO);
 
@@ -92,7 +92,7 @@ public class CheckingControllerTest {
     @DisplayName("Creates checking when 1 Owners is provided.")
     void createChecking_WithOneOwner() throws Exception {
 
-        AccountDTO accountDTO = new AccountDTO(1000D, primaryOwner_OneOwnerBigAgeTest.getUserName());
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName());
 
         String body = objectMapper.writeValueAsString(accountDTO);
 
@@ -108,7 +108,7 @@ public class CheckingControllerTest {
     @DisplayName("Creates checking when primaryOwnerAge > 24 and 1 Owner.")
     void createChecking_WithUniqueOwnerOlderThan24() throws Exception {
 
-        AccountDTO accountDTO = new AccountDTO(1000D, primaryOwner_OneOwnerBigAgeTest.getUserName());
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName());
 
         String body = objectMapper.writeValueAsString(accountDTO);
 
@@ -121,10 +121,10 @@ public class CheckingControllerTest {
     }
 
     @Test
-    @DisplayName("Creates checking when primaryOwnerAge < 24 and 1 Owner.")
+    @DisplayName("Creates studentChecking when primaryOwnerAge < 24 and 1 Owner.")
     void createChecking_WithUniqueOwnerYoungerThan24() throws Exception {
 
-        AccountDTO accountDTO = new AccountDTO(1000D, primaryOwner_LowAgeTest.getUserName());
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_LowAgeTest.getUserName());
 
         String body = objectMapper.writeValueAsString(accountDTO);
 
@@ -140,7 +140,7 @@ public class CheckingControllerTest {
     @DisplayName("Creates checking when primaryOwnerAge > 24 and 2 Owner.")
     void createChecking_WithTwoOwnersOlderThan24() throws Exception {
 
-        AccountDTO accountDTO = new AccountDTO(1000D, primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
 
         String body = objectMapper.writeValueAsString(accountDTO);
 
@@ -153,10 +153,10 @@ public class CheckingControllerTest {
     }
 
     @Test
-    @DisplayName("Creates checking when primaryOwnerAge < 24 and 2 Owner.")
+    @DisplayName("Creates studentChecking when primaryOwnerAge < 24 and 2 Owner.")
     void createChecking_WithTwoOwnersYoungerThan24() throws Exception {
 
-        AccountDTO accountDTO = new AccountDTO(1000D, primaryOwner_LowAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_LowAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
 
         String body = objectMapper.writeValueAsString(accountDTO);
 
@@ -168,42 +168,17 @@ public class CheckingControllerTest {
         Assertions.assertTrue(studentCheckingRepository.findByPrimaryOwnerUserName(primaryOwner_LowAgeTest.getUserName()).isPresent());
     }
 
-//    @Test
-//    @DisplayName("Creates checking when primaryOwnerAge < 24 and 1 Owner.")
-//    void createChecking_WithLowBalance_ThrowsException() throws Exception {
-//
-//        /**
-//         * Se puede hacer un assertThrows con el mockMvc
-//         */
-//        AccountDTO accountDTO = new AccountDTO(10D, primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
-//
-//        String body = objectMapper.writeValueAsString(accountDTO);
-////
-////        Exception exception = assertThrows(
-////                Exception.class,
-////                () -> mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
-////                        .andExpect(status().isCreated()).andReturn()
-////        );
-//        MvcResult mvcResult =  mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isForbidden()).andReturn();
-//
-//
-//       // assertThrows()
-//
-//        assertEquals("The balance cannot be lower than", mvcResult.getResponse().getErrorMessage());
-//
-////        AccountDTO accountDTO = new AccountDTO(new Money(BigDecimal.valueOf(1000)), primaryOwner_LowAgeTest.getUserName());
-////
-////        String body = objectMapper.writeValueAsString(accountDTO);
-////
-////        System.out.println(body);
-////
-////        MvcResult mvcResult =mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
-////                .andExpect(status().isCreated()).andReturn();
-////
-////        Assertions.assertTrue(studentCheckingRepository.findByPrimaryOwnerUserName(primaryOwner_LowAgeTest.getUserName()).isPresent());
-//    }
+    @Test
+    @DisplayName("Create checking with Balance lower than minimum throw exception.")
+    void createChecking_WithLowBalance_ThrowsException() throws Exception {
 
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(10)), primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
 
+        String body = objectMapper.writeValueAsString(accountDTO);
 
+        MvcResult mvcResult =  mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden()).andReturn();
+
+        assertTrue(mvcResult.getResponse().getErrorMessage().contains("The balance cannot be lower than"));
+    }
 }

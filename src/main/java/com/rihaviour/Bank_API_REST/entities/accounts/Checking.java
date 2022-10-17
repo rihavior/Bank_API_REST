@@ -23,6 +23,10 @@ public class Checking extends Account{
     private Status status;
 
     public Checking() {
+        this.secretKey = "1234";
+        this.minimumBalance = new BigDecimal(250);
+        this.monthlyMaintenanceFee = new BigDecimal(12);
+        this.status = Status.ACTIVE;
     }
 
     public Checking(Money balance, AccountHolder primaryOwner) {
