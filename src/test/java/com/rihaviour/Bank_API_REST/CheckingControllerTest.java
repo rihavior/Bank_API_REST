@@ -105,7 +105,7 @@ public class CheckingControllerTest {
     }
 
     @Test
-    @DisplayName("Creates checking when primaryOwnerAge > 24 and 1 Owner.")
+    @DisplayName("Creates checking when primaryOwnerAge > 24.")
     void createChecking_WithUniqueOwnerOlderThan24() throws Exception {
 
         AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName());
@@ -121,7 +121,7 @@ public class CheckingControllerTest {
     }
 
     @Test
-    @DisplayName("Creates studentChecking when primaryOwnerAge < 24 and 1 Owner.")
+    @DisplayName("Creates studentChecking when primaryOwnerAge < 24.")
     void createChecking_WithUniqueOwnerYoungerThan24() throws Exception {
 
         AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_LowAgeTest.getUserName());
@@ -137,42 +137,10 @@ public class CheckingControllerTest {
     }
 
     @Test
-    @DisplayName("Creates checking when primaryOwnerAge > 24 and 2 Owner.")
-    void createChecking_WithTwoOwnersOlderThan24() throws Exception {
+    @DisplayName("Create checking with Balance lower than minimum throws exception.")
+    void createChecking_WithLowBalanceOneOwner_ThrowsException() throws Exception {
 
-        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
-
-        String body = objectMapper.writeValueAsString(accountDTO);
-
-        System.out.println(body);
-
-        MvcResult mvcResult =mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated()).andReturn();
-
-        Assertions.assertTrue(checkingRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerBigAgeTest.getUserName()).isPresent());
-    }
-
-    @Test
-    @DisplayName("Creates studentChecking when primaryOwnerAge < 24 and 2 Owner.")
-    void createChecking_WithTwoOwnersYoungerThan24() throws Exception {
-
-        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_LowAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
-
-        String body = objectMapper.writeValueAsString(accountDTO);
-
-        System.out.println(body);
-
-        MvcResult mvcResult =mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated()).andReturn();
-
-        Assertions.assertTrue(studentCheckingRepository.findByPrimaryOwnerUserName(primaryOwner_LowAgeTest.getUserName()).isPresent());
-    }
-
-    @Test
-    @DisplayName("Create checking with Balance lower than minimum throw exception.")
-    void createChecking_WithLowBalance_ThrowsException() throws Exception {
-
-        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(10)), primaryOwner_OneOwnerBigAgeTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(10)), primaryOwner_OneOwnerBigAgeTest.getUserName());
 
         String body = objectMapper.writeValueAsString(accountDTO);
 
@@ -180,5 +148,33 @@ public class CheckingControllerTest {
                 .andExpect(status().isForbidden()).andReturn();
 
         assertTrue(mvcResult.getResponse().getErrorMessage().contains("The balance cannot be lower than"));
+    }
+
+    @Test
+    @DisplayName("Create checking with unknown primaryOwner userName throws exception.")
+    void createChecking_WithPrimaryOwnerUnknownUserName_ThrowsException() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), "UnknownUserName");
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        MvcResult mvcResult =  mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden()).andReturn();
+
+        assertEquals("The User introduced as Primary Owner doesn't Exists", mvcResult.getResponse().getErrorMessage());
+    }
+
+    @Test
+    @DisplayName("Create checking with unknown primaryOwner userName throws exception.")
+    void createChecking_WithSecondaryOwnerUnknownUserName_ThrowsException() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName(),"UnknownUserName");
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        MvcResult mvcResult =  mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden()).andReturn();
+
+        assertEquals("The User introduced as Secondary Owner doesn't Exists", mvcResult.getResponse().getErrorMessage());
     }
 }

@@ -90,30 +90,22 @@ public class AccountService implements AccountServiceInterface {
     public Account createChecking(AccountDTO accountDTO) {
 
         Checking checking = new Checking();
+        StudentChecking studentChecking = new StudentChecking();
+
+        //todo    ESTO HACE FALTA?
+        checking.setSecondaryOwner(null);
+        studentChecking.setSecondaryOwner(null);
 
         AccountHolder primaryOwner = accountHolderRepository.findByUserName(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The User introduced as Primary Owner doesn't Exists")
+                () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Primary Owner doesn't Exists")
         );
 
-        if (accountDTO.getSecondaryOwnerUsername() == null) {
-
-            if (primaryOwner.getAge() > 24) {
-
-            if (accountDTO.getBalance().getAmount().compareTo(checking.getMinimumBalance()) < 0) {
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The balance cannot be lower than" + checking.getMinimumBalance());
-            }
-
-            checking.setBalance(accountDTO.getBalance());
-            checking.setPrimaryOwner(primaryOwner);
-
-            return checkingRepository.save(checking);
-            }
-            StudentChecking studentChecking = new StudentChecking(accountDTO.getBalance(), primaryOwner);
-            return studentCheckingRepository.save(studentChecking);
+        if (accountDTO.getSecondaryOwnerUsername() != null) {
+            AccountHolder secondaryOwner = accountHolderRepository.findByUserName(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Secondary Owner doesn't Exists"));
+            checking.setSecondaryOwner(secondaryOwner);
+            studentChecking.setSecondaryOwner(secondaryOwner);
         }
-
-        AccountHolder secondaryOwner = accountHolderRepository.findByUserName(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
-                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "The User introduced as Secondary Owner doesn't Exists"));
 
         if (primaryOwner.getAge() > 24) {
 
@@ -123,19 +115,19 @@ public class AccountService implements AccountServiceInterface {
 
             checking.setBalance(accountDTO.getBalance());
             checking.setPrimaryOwner(primaryOwner);
-            checking.setSecondaryOwner(secondaryOwner);
 
             return checkingRepository.save(checking);
         }
-        StudentChecking studentChecking = new StudentChecking(accountDTO.getBalance(), primaryOwner, secondaryOwner);
+
+        studentChecking.setBalance(accountDTO.getBalance());
+        studentChecking.setPrimaryOwner(primaryOwner);
         return studentCheckingRepository.save(studentChecking);
-
-//        return checking;
     }
 
-
-        public List<Account> getAllAccounts () {
-            //todo -----> Añadir if (no existe ninguna account) lanzar excepcion
-            return checkingRepository.findAll();
+    public List<Account> getAllAccounts() {
+        if (checkingRepository.count() == 0) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No checking accounts found");
         }
+        return checkingRepository.findAll();
     }
+}

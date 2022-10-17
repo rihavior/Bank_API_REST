@@ -36,6 +36,12 @@ public class CheckingController implements CheckingControllerInterface {
         return accountService.createChecking(accountDTO);
     }
 
+    @PostMapping("/create_savings")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Account createSavings(@RequestBody AccountDTO accountDTO) {
+        return accountService.createChecking(accountDTO);
+    }
+
 //    @PatchMapping("/products/updateQuantity/{id}/{quantity}")
 //    @ResponseStatus(HttpStatus.OK)
 //    public Product updateProductQuantity(@PathVariable Long id, @PathVariable int quantity) {
