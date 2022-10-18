@@ -21,7 +21,7 @@ public class Savings extends Account{
     private Long id;
 
     private String secretKey;
-    private BigDecimal minimumBalance = new BigDecimal(1000);//todo ESTO FUNIONARA??? JUNTO CON lin28
+    private BigDecimal minimumBalance;//todo ESTO FUNIONARA??? JUNTO CON lin28
     private Status status;
     @DecimalMax(value = "0.5", message = "The given interestRate is greater than max.")//todo ESTO FUNIONARA???
     @Digits(integer = 1, fraction = 4)
@@ -42,6 +42,7 @@ public class Savings extends Account{
         this.interestRate = new BigDecimal("0.0025");
     }
     public Savings() {
+        setBalance(new Money(new BigDecimal(1000)));
         this.secretKey = "1234";
         this.minimumBalance = new BigDecimal(100);
         this.status = Status.ACTIVE;

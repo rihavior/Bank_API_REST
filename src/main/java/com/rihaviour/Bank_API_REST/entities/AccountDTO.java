@@ -43,6 +43,10 @@ public class AccountDTO {
         this.interestRate = interestRate;
     }
 
+    public AccountDTO(String primaryOwnerUsername) {
+        this.primaryOwnerUsername = primaryOwnerUsername;
+    }
+
     public AccountDTO() {
     }
 

@@ -95,7 +95,6 @@ public class AccountService implements AccountServiceInterface {
             if (accountDTO.getInterestRate().compareTo(new BigDecimal("0.5")) > 0) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The interestRate cannot be greater than max(0.5).");
             }
-
             savings.setInterestRate(accountDTO.getInterestRate());
         }
 
@@ -103,7 +102,15 @@ public class AccountService implements AccountServiceInterface {
 
         savings.setPrimaryOwner(primaryOwner);
 
-        savings.setBalance(accountDTO.getBalance());
+        if (accountDTO.getBalance() != null) {
+
+            if (accountDTO.getBalance().getAmount().compareTo(savings.getMinimumBalance()) < 0) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The Balance cannot be lower than min(100).");
+            }
+            savings.setBalance(accountDTO.getBalance());
+        }
+
+
 
         return savingsRepository.save(savings);
     }

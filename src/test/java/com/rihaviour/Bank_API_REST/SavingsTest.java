@@ -93,7 +93,7 @@ public class SavingsTest {
     }
 
     @Test
-    @DisplayName("Creates savings without interestRate set it to default.")
+    @DisplayName("Creates savings without interestRate, set it to default.")
     void createSavings_WithoutInterestRate_SetToDefault() throws Exception {
 
         AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName());
@@ -127,7 +127,7 @@ public class SavingsTest {
     }
 
     @Test
-    @DisplayName("Creates savings with given interestRate > 0.5(MAX) throws exception.")
+    @DisplayName("Creates savings with given interestRate > 0.5(MAX), throws exception.")
     void createSavings_WithGivenInterestRateGreaterThanMax_ThrowsException() throws Exception {
 
         AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName(), new BigDecimal("0.5678"));
@@ -142,4 +142,59 @@ public class SavingsTest {
         assertEquals("The interestRate cannot be greater than max(0.5).", mvcResult.getResponse().getErrorMessage());
     }
 
+    @Test
+    @DisplayName("Creates savings without balance, set it to default.")
+    void createSavings_WithoutBalance_SetToDefault() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(primaryOwner_OneOwnerTest.getUserName());
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        System.out.println(body);
+
+        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+
+        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("1000.00"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getBalance().getAmount());
+    }
+
+    @Test
+    @DisplayName("Creates savings with given balance, set it.")
+    void createSavings_WithGivenBalance_SetIt() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(500)), primaryOwner_OneOwnerTest.getUserName());
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        System.out.println(body);
+
+        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+
+        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("500.00"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getBalance().getAmount());
+    }
+
+    @Test
+    @DisplayName("Creates savings with given balance < minimumBalance(100), throws exception.")
+    void createSavings_WithGivenBalanceGreaterThanMax_SetIt() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(50)), primaryOwner_OneOwnerTest.getUserName());
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        System.out.println(body);
+
+        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden()).andReturn();
+
+        assertEquals("The Balance cannot be lower than min(100).", mvcResult.getResponse().getErrorMessage());
+    }
+
 }
+
+
+
+
+
