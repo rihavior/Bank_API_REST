@@ -14,5 +14,7 @@ public interface AccountServiceInterface {
 
     Account createChecking(AccountDTO accountDTO);
 
+    Account createSavings(AccountDTO accountDTO);
+
     List<Account> getAllAccounts();
 }

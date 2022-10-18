@@ -1,10 +1,9 @@
 package com.rihaviour.Bank_API_REST.controllers;
 
-import com.rihaviour.Bank_API_REST.controllers.interfaces.CheckingControllerInterface;
+import com.rihaviour.Bank_API_REST.controllers.interfaces.AccountControllerInterface;
 import com.rihaviour.Bank_API_REST.entities.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.Account;
 import com.rihaviour.Bank_API_REST.services.interfaces.AccountServiceInterface;
-import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class CheckingController implements CheckingControllerInterface {
+public class AccountController implements AccountControllerInterface {
 
     @Autowired
     AccountServiceInterface accountService;

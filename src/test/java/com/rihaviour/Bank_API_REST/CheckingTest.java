@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class CheckingControllerTest {
+public class CheckingTest {
 
     @Autowired
     CheckingRepository checkingRepository;
@@ -50,6 +50,7 @@ public class CheckingControllerTest {
     @BeforeEach
     public void setUp(){
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
         Address testAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
 
         primaryOwner_OneOwnerBigAgeTest = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,"ricardo@test.com");
