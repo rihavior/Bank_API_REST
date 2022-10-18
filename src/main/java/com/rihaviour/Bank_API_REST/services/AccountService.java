@@ -90,6 +90,17 @@ public class AccountService implements AccountServiceInterface {
             savings.setSecondaryOwner(secondaryOwner);
         }
 
+        if (accountDTO.getInterestRate() != null) {
+
+            if (accountDTO.getInterestRate().compareTo(new BigDecimal("0.5")) > 0) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The interestRate cannot be greater than max(0.5).");
+            }
+
+            savings.setInterestRate(accountDTO.getInterestRate());
+        }
+
+
+
         savings.setPrimaryOwner(primaryOwner);
 
         savings.setBalance(accountDTO.getBalance());

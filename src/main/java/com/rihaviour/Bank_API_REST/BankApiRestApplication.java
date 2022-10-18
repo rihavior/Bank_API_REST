@@ -43,16 +43,19 @@ public class BankApiRestApplication implements CommandLineRunner{
 //		AccountHolder user = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), address,"ricardo@test.com");
 //
 //		accountHolderRepository.save(user);
-//
-//
+
+
 //		Checking checking = new Checking(new Money(new BigDecimal(1000)), user);
 //
 //		checkingRepository.save(checking);
 //
-//		Savings savings = new Savings(new Money(new BigDecimal(1000)),user);
+//		Savings savings = new Savings(new Money(new BigDecimal("1000")),user);
 //
 //		savingsRepository.save(savings);
 //
+//		System.out.println(savingsRepository.findByPrimaryOwnerUserName(user.getUserName()).get().getMinimumBalance());
+//		System.out.println(savingsRepository.findByPrimaryOwnerUserName(user.getUserName()).get().getInterestRate());
+////
 ////		checkingRepository.findByPrimaryOwnerId(1L);
 //
 //		int age = Period.between(user.getDateOfBirth(),LocalDate.now()).getYears();

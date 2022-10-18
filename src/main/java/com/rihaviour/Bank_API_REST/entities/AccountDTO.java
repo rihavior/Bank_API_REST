@@ -6,6 +6,7 @@ import com.rihaviour.Bank_API_REST.others.Money;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 public class AccountDTO {
 
@@ -18,15 +19,28 @@ public class AccountDTO {
 
     private String secondaryOwnerUsername;
 
+    private BigDecimal interestRate;
+
     public AccountDTO(Money balance, String primaryOwnerUsername, String secondaryOwnerUsername) {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
         this.secondaryOwnerUsername = secondaryOwnerUsername;
     }
+    public AccountDTO(Money balance, String primaryOwnerUsername, String secondaryOwnerUsername, BigDecimal interestRate) {
+        this.balance = balance;
+        this.primaryOwnerUsername = primaryOwnerUsername;
+        this.secondaryOwnerUsername = secondaryOwnerUsername;
+        this.interestRate = interestRate;
+    }
 
     public AccountDTO(Money balance, String primaryOwnerUsername) {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
+    }
+    public AccountDTO(Money balance, String primaryOwnerUsername, BigDecimal interestRate) {
+        this.balance = balance;
+        this.primaryOwnerUsername = primaryOwnerUsername;
+        this.interestRate = interestRate;
     }
 
     public AccountDTO() {
@@ -54,5 +68,13 @@ public class AccountDTO {
 
     public void setSecondaryOwnerUsername(String secondaryOwnerUsername) {
         this.secondaryOwnerUsername = secondaryOwnerUsername;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
     }
 }

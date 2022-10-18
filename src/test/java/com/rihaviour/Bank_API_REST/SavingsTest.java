@@ -22,6 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -71,8 +72,8 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        Assertions.assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        Assertions.assertTrue(savingsRepository.findBySecondaryOwnerUserName(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
+        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertTrue(savingsRepository.findBySecondaryOwnerUserName(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
     }
 
     @Test
@@ -88,6 +89,57 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        Assertions.assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
     }
+
+    @Test
+    @DisplayName("Creates savings without interestRate set it to default.")
+    void createSavings_WithoutInterestRate_SetToDefault() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName());
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        System.out.println(body);
+
+        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+
+        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("0.0025"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
+    }
+
+    @Test
+    @DisplayName("Creates savings with given interestRate.")
+    void createSavings_WithGivenInterestRate_SetIt() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName(), new BigDecimal("0.1234"));
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        System.out.println(body);
+
+        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+
+        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("0.1234"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
+    }
+
+    @Test
+    @DisplayName("Creates savings with given interestRate > 0.5(MAX) throws exception.")
+    void createSavings_WithGivenInterestRateGreaterThanMax_ThrowsException() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName(), new BigDecimal("0.5678"));
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        System.out.println(body);
+
+        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden()).andReturn();
+
+        assertEquals("The interestRate cannot be greater than max(0.5).", mvcResult.getResponse().getErrorMessage());
+    }
+
 }

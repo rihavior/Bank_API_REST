@@ -9,7 +9,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 @Entity
 public class Savings extends Account{
@@ -21,7 +23,8 @@ public class Savings extends Account{
     private String secretKey;
     private BigDecimal minimumBalance = new BigDecimal(1000);//todo ESTO FUNIONARA??? JUNTO CON lin28
     private Status status;
-    @DecimalMax(value = "0.5")//todo ESTO FUNIONARA??? JUNTO CON lin26 y 28
+    @DecimalMax(value = "0.5", message = "The given interestRate is greater than max.")//todo ESTO FUNIONARA???
+    @Digits(integer = 1, fraction = 4)
     private BigDecimal interestRate;
 
     public Savings(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
@@ -36,13 +39,13 @@ public class Savings extends Account{
         this.secretKey = "1234";
         this.minimumBalance = new BigDecimal(100);
         this.status = Status.ACTIVE;
-        this.interestRate = new BigDecimal(0.0025);
+        this.interestRate = new BigDecimal("0.0025");
     }
     public Savings() {
         this.secretKey = "1234";
         this.minimumBalance = new BigDecimal(100);
         this.status = Status.ACTIVE;
-        this.interestRate = new BigDecimal(0.0025);
+        this.interestRate = new BigDecimal("0.0025");
     }
 
     public Long getId() {

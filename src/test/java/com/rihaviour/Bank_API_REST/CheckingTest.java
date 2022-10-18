@@ -166,7 +166,7 @@ public class CheckingTest {
     }
 
     @Test
-    @DisplayName("Create checking with unknown primaryOwner userName throws exception.")
+    @DisplayName("Create checking with unknown secondaryOwner userName throws exception.")
     void createChecking_WithSecondaryOwnerUnknownUserName_ThrowsException() throws Exception {
 
         AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerBigAgeTest.getUserName(),"UnknownUserName");
