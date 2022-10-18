@@ -58,26 +58,26 @@ public class SavingsTest {
         accountHolderRepository.save(secondaryOwner_TwoOwnersTest);
     }
 
-//    @Test
-//    @DisplayName("Creates savings when 1 Owner is provided.")
-//    void createSavings_Works() throws Exception {
-//
-//        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName());
-//
-//        String body = objectMapper.writeValueAsString(accountDTO);
-//
-//        System.out.println(body);
-//
-//        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isCreated()).andReturn();
-//
-//        Assertions.assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-//        Assertions.assertTrue(checkingRepository.findBySecondaryOwnerUserName(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
-//    }
+    @Test
+    @DisplayName("Creates savings when 2 Owners are provided.")
+    void createSavings_WithTwoOwners_Works() throws Exception {
+
+        AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName(), secondaryOwner_TwoOwnersTest.getUserName());
+
+        String body = objectMapper.writeValueAsString(accountDTO);
+
+        System.out.println(body);
+
+        MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+
+        Assertions.assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        Assertions.assertTrue(savingsRepository.findBySecondaryOwnerUserName(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
+    }
 
     @Test
     @DisplayName("Creates savings when 1 Owner is provided.")
-    void createSavings_Works() throws Exception {
+    void createSavings_WithOneOwner_Works() throws Exception {
 
         AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(1000)), primaryOwner_OneOwnerTest.getUserName());
 

@@ -84,6 +84,12 @@ public class AccountService implements AccountServiceInterface {
                 () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Primary Owner doesn't Exists")
         );
 
+        if (accountDTO.getSecondaryOwnerUsername() != null) {
+            AccountHolder secondaryOwner = accountHolderRepository.findByUserName(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Secondary Owner doesn't Exists"));
+            savings.setSecondaryOwner(secondaryOwner);
+        }
+
         savings.setPrimaryOwner(primaryOwner);
 
         savings.setBalance(accountDTO.getBalance());
