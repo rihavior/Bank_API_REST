@@ -1,13 +1,11 @@
 package com.rihaviour.Bank_API_REST;
 
 import com.rihaviour.Bank_API_REST.entities.accounts.Checking;
+import com.rihaviour.Bank_API_REST.entities.accounts.CreditCard;
 import com.rihaviour.Bank_API_REST.entities.accounts.Savings;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
-import com.rihaviour.Bank_API_REST.repositories.AccountHolderRepository;
-import com.rihaviour.Bank_API_REST.repositories.SavingsRepository;
-import com.rihaviour.Bank_API_REST.repositories.UserRepository;
-import com.rihaviour.Bank_API_REST.repositories.CheckingRepository;
+import com.rihaviour.Bank_API_REST.repositories.*;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -34,6 +32,9 @@ public class BankApiRestApplication implements CommandLineRunner{
 	@Autowired
 	AccountHolderRepository accountHolderRepository;
 
+	@Autowired
+	CreditCardRepository creditCardRepository;
+
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -43,15 +44,23 @@ public class BankApiRestApplication implements CommandLineRunner{
 //		AccountHolder user = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), address,"ricardo@test.com");
 //
 //		accountHolderRepository.save(user);
-
-
-//		Checking checking = new Checking(new Money(new BigDecimal(1000)), user);
 //
-//		checkingRepository.save(checking);
 //
-//		Savings savings = new Savings(new Money(new BigDecimal("1000")),user);
+////		Checking checking = new Checking(new Money(new BigDecimal(1000)), user);
+////
+////		checkingRepository.save(checking);
+////
+////		Savings savings = new Savings(new Money(new BigDecimal("1000")),user);
+////
+////		savingsRepository.save(savings);
 //
-//		savingsRepository.save(savings);
+//		CreditCard creditCard = new CreditCard();
+//
+//		creditCard.setBalance(new Money(new BigDecimal(1000)));
+//
+//		creditCard.setPrimaryOwner(user);
+//
+//		creditCardRepository.save(creditCard);
 //
 //		System.out.println(savingsRepository.findByPrimaryOwnerUserName(user.getUserName()).get().getMinimumBalance());
 //		System.out.println(savingsRepository.findByPrimaryOwnerUserName(user.getUserName()).get().getInterestRate());

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 
 @Entity
@@ -16,17 +17,29 @@ public class CreditCard extends Account{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Digits(integer = 1, fraction = 4)
     private BigDecimal interestRate;
+
 
     private BigDecimal creditLimit;
 
-    public CreditCard(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal interestRate, BigDecimal creditLimit) {
+    public CreditCard(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner, BigDecimal interestRate) {
         super(balance, primaryOwner, secondaryOwner);
         this.interestRate = interestRate;
-        this.creditLimit = creditLimit;
+        this.creditLimit = new BigDecimal(100);
     }
 
+    public CreditCard(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
+        super(balance, primaryOwner, secondaryOwner);
+        this.interestRate = new BigDecimal("0.2");
+        this.creditLimit = new BigDecimal(100);
+    }
+
+
+
     public CreditCard() {
+        this.interestRate = new BigDecimal("0.2");
+        this.creditLimit = new BigDecimal(100);
     }
 
     public Long getId() {

@@ -15,5 +15,7 @@ public interface AccountControllerInterface {
 
     Account createSavings(AccountDTO accountDTO);
 
+    Account createCreditCard(AccountDTO accountDTO);
+
     List<Account> getAllAccounts();
 }

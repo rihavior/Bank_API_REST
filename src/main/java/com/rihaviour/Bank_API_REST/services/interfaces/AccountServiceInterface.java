@@ -16,5 +16,8 @@ public interface AccountServiceInterface {
 
     Account createSavings(AccountDTO accountDTO);
 
+    Account createCreditCard(AccountDTO accountDTO);
+
+
     List<Account> getAllAccounts();
 }

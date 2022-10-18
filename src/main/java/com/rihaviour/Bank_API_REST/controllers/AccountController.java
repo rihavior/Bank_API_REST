@@ -41,11 +41,12 @@ public class AccountController implements AccountControllerInterface {
         return accountService.createSavings(accountDTO);
     }
 
-//    @PatchMapping("/products/updateQuantity/{id}/{quantity}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Product updateProductQuantity(@PathVariable Long id, @PathVariable int quantity) {
-//        return productService.updateProductQuantity(id, quantity);
-//    }
+    @PostMapping("/create_credit_card")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Account createCreditCard(@RequestBody AccountDTO accountDTO) {
+        return accountService.createCreditCard(accountDTO);
+    }
+
 
 
 

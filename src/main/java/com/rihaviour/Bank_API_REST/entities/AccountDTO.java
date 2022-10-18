@@ -21,6 +21,8 @@ public class AccountDTO {
 
     private BigDecimal interestRate;
 
+    private BigDecimal creditLimit;
+
     public AccountDTO(Money balance, String primaryOwnerUsername, String secondaryOwnerUsername) {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
@@ -33,6 +35,12 @@ public class AccountDTO {
         this.interestRate = interestRate;
     }
 
+    public AccountDTO(BigDecimal interestRate, Money balance, String primaryOwnerUsername) {
+        this.interestRate = interestRate;
+        this.balance = balance;
+        this.primaryOwnerUsername = primaryOwnerUsername;
+    }
+
     public AccountDTO(Money balance, String primaryOwnerUsername) {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
@@ -41,6 +49,12 @@ public class AccountDTO {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
         this.interestRate = interestRate;
+    }
+
+    public AccountDTO(Money balance, BigDecimal creditLimit, String primaryOwnerUsername) {
+        this.balance = balance;
+        this.primaryOwnerUsername = primaryOwnerUsername;
+        this.creditLimit = creditLimit;
     }
 
     public AccountDTO(String primaryOwnerUsername) {
@@ -80,5 +94,13 @@ public class AccountDTO {
 
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
+    }
+
+    public BigDecimal getCreditLimit() {
+        return creditLimit;
+    }
+
+    public void setCreditLimit(BigDecimal creditLimit) {
+        this.creditLimit = creditLimit;
     }
 }
