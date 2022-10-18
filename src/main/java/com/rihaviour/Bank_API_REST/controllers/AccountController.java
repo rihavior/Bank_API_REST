@@ -38,7 +38,7 @@ public class AccountController implements AccountControllerInterface {
     @PostMapping("/create_savings")
     @ResponseStatus(HttpStatus.CREATED)
     public Account createSavings(@RequestBody AccountDTO accountDTO) {
-        return accountService.createChecking(accountDTO);
+        return accountService.createSavings(accountDTO);
     }
 
 //    @PatchMapping("/products/updateQuantity/{id}/{quantity}")

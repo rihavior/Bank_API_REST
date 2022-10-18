@@ -73,15 +73,27 @@ public class AccountService implements AccountServiceInterface {
         return studentCheckingRepository.save(studentChecking);
     }
 
-    @Override
+
     public Account createSavings(AccountDTO accountDTO) {
+
         Savings savings = new Savings();
+
+        savings.setSecondaryOwner(null);
+
+        AccountHolder primaryOwner = accountHolderRepository.findByUserName(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Primary Owner doesn't Exists")
+        );
+
+        savings.setPrimaryOwner(primaryOwner);
+
+        savings.setBalance(accountDTO.getBalance());
+
         return savingsRepository.save(savings);
     }
 
     public List<Account> getAllAccounts() {
         if (checkingRepository.count() == 0) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No checking accounts found");
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No accounts found");
         }
         return checkingRepository.findAll();
     }

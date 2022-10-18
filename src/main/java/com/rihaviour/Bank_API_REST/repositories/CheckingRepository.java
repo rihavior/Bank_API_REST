@@ -12,6 +12,6 @@ public interface CheckingRepository extends JpaRepository<Account, Long> {
 
     Optional<Checking> findByPrimaryOwnerUserName(String primaryOwnerUserName);
 
-    Optional<Checking> findBySecondaryOwnerUserName(String primaryOwnerUserName);
+    Optional<Checking> findBySecondaryOwnerUserName(String secondaryOwnerUserName);
 
 }

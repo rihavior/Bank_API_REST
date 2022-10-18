@@ -1,9 +1,11 @@
 package com.rihaviour.Bank_API_REST;
 
 import com.rihaviour.Bank_API_REST.entities.accounts.Checking;
+import com.rihaviour.Bank_API_REST.entities.accounts.Savings;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
 import com.rihaviour.Bank_API_REST.repositories.AccountHolderRepository;
+import com.rihaviour.Bank_API_REST.repositories.SavingsRepository;
 import com.rihaviour.Bank_API_REST.repositories.UserRepository;
 import com.rihaviour.Bank_API_REST.repositories.CheckingRepository;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
@@ -27,7 +29,7 @@ public class BankApiRestApplication implements CommandLineRunner{
 	CheckingRepository checkingRepository;
 
 	@Autowired
-	UserRepository userRepository;
+	SavingsRepository savingsRepository;
 
 	@Autowired
 	AccountHolderRepository accountHolderRepository;
@@ -46,6 +48,10 @@ public class BankApiRestApplication implements CommandLineRunner{
 //		Checking checking = new Checking(new Money(new BigDecimal(1000)), user);
 //
 //		checkingRepository.save(checking);
+//
+//		Savings savings = new Savings(new Money(new BigDecimal(1000)),user);
+//
+//		savingsRepository.save(savings);
 //
 ////		checkingRepository.findByPrimaryOwnerId(1L);
 //

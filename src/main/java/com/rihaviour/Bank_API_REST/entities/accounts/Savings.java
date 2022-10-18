@@ -22,17 +22,27 @@ public class Savings extends Account{
     private BigDecimal minimumBalance = new BigDecimal(1000);//todo ESTO FUNIONARA??? JUNTO CON lin28
     private Status status;
     @DecimalMax(value = "0.5")//todo ESTO FUNIONARA??? JUNTO CON lin26 y 28
-    private BigDecimal interestRate = new BigDecimal(0.0025);
+    private BigDecimal interestRate;
 
-    public Savings(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner, String secretKey, BigDecimal interestRate) {
+    public Savings(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
         super(balance, primaryOwner, secondaryOwner);
-        this.secretKey = secretKey;
+        this.secretKey = "1234";
         this.minimumBalance = new BigDecimal(100);
         this.status = Status.ACTIVE;
-        this.interestRate = interestRate;
+        this.interestRate = new BigDecimal("0.0025");
     }
-
+    public Savings(Money balance, AccountHolder primaryOwner) {
+        super(balance, primaryOwner);
+        this.secretKey = "1234";
+        this.minimumBalance = new BigDecimal(100);
+        this.status = Status.ACTIVE;
+        this.interestRate = new BigDecimal(0.0025);
+    }
     public Savings() {
+        this.secretKey = "1234";
+        this.minimumBalance = new BigDecimal(100);
+        this.status = Status.ACTIVE;
+        this.interestRate = new BigDecimal(0.0025);
     }
 
     public Long getId() {
@@ -65,5 +75,13 @@ public class Savings extends Account{
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
     }
 }
