@@ -1,6 +1,8 @@
 package com.rihaviour.Bank_API_REST;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.others.Address;

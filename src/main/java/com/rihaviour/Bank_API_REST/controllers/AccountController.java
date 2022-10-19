@@ -2,6 +2,7 @@ package com.rihaviour.Bank_API_REST.controllers;
 
 import com.rihaviour.Bank_API_REST.controllers.interfaces.AccountControllerInterface;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.Account;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.services.interfaces.AccountServiceInterface;
@@ -50,8 +51,8 @@ public class AccountController implements AccountControllerInterface {
 
     @PostMapping("/create_account_holder")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountHolder createAccountHolder(@RequestBody AccountHolder accountHolder) {
-        return accountService.createAccountHolder(accountHolder);
+    public AccountHolder createAccountHolder(@RequestBody AccountHolderDTO accountHolderDTO) {
+        return accountService.createAccountHolder(accountHolderDTO);
     }
 
 

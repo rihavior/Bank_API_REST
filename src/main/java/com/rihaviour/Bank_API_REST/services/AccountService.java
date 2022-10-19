@@ -1,6 +1,7 @@
 package com.rihaviour.Bank_API_REST.services;
 
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.*;
 import com.rihaviour.Bank_API_REST.repositories.*;
 import com.rihaviour.Bank_API_REST.services.interfaces.AccountServiceInterface;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -154,10 +156,39 @@ public class AccountService implements AccountServiceInterface {
     }
 
 
-    public AccountHolder createAccountHolder(AccountHolder accountHolder) {
+    public AccountHolder createAccountHolder(AccountHolderDTO accountHolderDTO) {
+        AccountHolder accountHolder = new AccountHolder();
+
+        if (accountHolderDTO.getName().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The Name can't be null.");
+        } accountHolder.setName(accountHolderDTO.getName());
+
+        if (accountHolderDTO.getUserName().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The UserName can't be null.");
+        }
+
+        if (accountHolderRepository.findByUserName(accountHolderDTO.getUserName()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The UserName: " + accountHolderDTO.getUserName() + ", already exists.");
+        } accountHolder.setUserName(accountHolderDTO.getUserName());
+
+        try{
+            accountHolder.setDateOfBirth(LocalDate.of(accountHolderDTO.getBirthYear(),accountHolderDTO.getBirthMonth(),accountHolderDTO.getBirthDay()));
+        } catch (Exception e){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Wrong birthDate format.");
+        }
         accountHolder.setAge();
+
+        if (accountHolder.getAge() > 150 || accountHolder.getAge() < 0) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden age(" + accountHolderDTO.getBirthYear() + "), should be between 0 and 150.");
+        }
+
+        accountHolder.setPrimaryAddress(accountHolderDTO.getPrimaryAddress());
+        accountHolder.setMailingAddress(accountHolderDTO.getMailingAddress());
+
+
         return accountHolderRepository.save(accountHolder);
     }
+
 
     public List<Account> getAllAccounts() {
         if (checkingRepository.count() == 0) {
