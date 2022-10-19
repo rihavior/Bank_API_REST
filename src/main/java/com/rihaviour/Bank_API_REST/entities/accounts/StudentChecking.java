@@ -25,12 +25,6 @@ public class StudentChecking extends Account{
         this.status = Status.ACTIVE;
     }
 
-    public StudentChecking(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
-        super(balance, primaryOwner, secondaryOwner);
-        this.secretKey = "1234";
-        this.status = Status.ACTIVE;
-    }
-
     public StudentChecking() {
     }
 

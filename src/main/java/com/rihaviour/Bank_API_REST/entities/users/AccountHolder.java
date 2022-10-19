@@ -20,7 +20,6 @@ public class AccountHolder extends User {
     private Long id;
 
     @NotNull
-    @JsonIgnore
     private LocalDate dateOfBirth;
 
     private int age;
@@ -33,7 +32,7 @@ public class AccountHolder extends User {
     /**
      * Aqui se puden hacer dos listas, una para las cuentas en las que aparezca como primaryOwner
      * y otro para las que aparezca como secondaryOwner.
-     * Tambien se podria hacer un Map<Account, String> donde la String sea primary o secondary. O un boolean.
+     * Tambien se podria hacer un Map<Account, String> donde la String sea primary o secondary. O un boolean isPrimary.
      */
 
     @OneToMany(mappedBy = "primaryOwner")

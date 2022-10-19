@@ -1,13 +1,13 @@
 package com.rihaviour.Bank_API_REST;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rihaviour.Bank_API_REST.entities.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
 import com.rihaviour.Bank_API_REST.repositories.AccountHolderRepository;
 import com.rihaviour.Bank_API_REST.repositories.SavingsRepository;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -60,6 +60,13 @@ public class SavingsTest {
 
         accountHolderRepository.save(secondaryOwner_TwoOwnersTest);
     }
+
+    @AfterEach
+    public void tearDown(){
+        savingsRepository.deleteAll();
+        accountHolderRepository.deleteAll();
+    }
+
 
     @Test
     @DisplayName("Creates savings when 2 Owners are provided.")

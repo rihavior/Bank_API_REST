@@ -27,13 +27,6 @@ public class Savings extends Account{
     @Digits(integer = 1, fraction = 4)
     private BigDecimal interestRate;
 
-    public Savings(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
-        super(balance, primaryOwner, secondaryOwner);
-        this.secretKey = "1234";
-        this.minimumBalance = new BigDecimal(100);
-        this.status = Status.ACTIVE;
-        this.interestRate = new BigDecimal("0.0025");
-    }
     public Savings(Money balance, AccountHolder primaryOwner) {
         super(balance, primaryOwner);
         this.secretKey = "1234";

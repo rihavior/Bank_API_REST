@@ -1,6 +1,6 @@
 package com.rihaviour.Bank_API_REST.services;
 
-import com.rihaviour.Bank_API_REST.entities.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.*;
 import com.rihaviour.Bank_API_REST.repositories.*;
 import com.rihaviour.Bank_API_REST.services.interfaces.AccountServiceInterface;
@@ -155,6 +155,7 @@ public class AccountService implements AccountServiceInterface {
 
 
     public AccountHolder createAccountHolder(AccountHolder accountHolder) {
+        accountHolder.setAge();
         return accountHolderRepository.save(accountHolder);
     }
 

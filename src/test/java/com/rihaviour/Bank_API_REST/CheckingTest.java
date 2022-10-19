@@ -1,7 +1,7 @@
 package com.rihaviour.Bank_API_REST;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rihaviour.Bank_API_REST.entities.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
 import com.rihaviour.Bank_API_REST.repositories.AccountHolderRepository;
@@ -68,12 +68,12 @@ public class CheckingTest {
         accountHolderRepository.save(primaryOwner_LowAgeTest);
     }
 
-//    @AfterEach
-//    public void tearDown(){
-//        accountHolderRepository.deleteAll();
-//        checkingRepository.deleteAll();
-//        studentCheckingRepository.deleteAll();
-//    }
+    @AfterEach
+    public void tearDown(){
+        checkingRepository.deleteAll();
+        studentCheckingRepository.deleteAll();
+        accountHolderRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("Creates checking when 2 Owners are provided.")

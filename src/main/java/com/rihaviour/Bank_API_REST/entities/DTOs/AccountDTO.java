@@ -1,4 +1,4 @@
-package com.rihaviour.Bank_API_REST.entities;
+package com.rihaviour.Bank_API_REST.entities.DTOs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
