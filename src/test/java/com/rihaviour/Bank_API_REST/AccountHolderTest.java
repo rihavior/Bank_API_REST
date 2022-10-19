@@ -36,11 +36,8 @@ public class AccountHolderTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     AccountHolder accountHolder_Test;
-
     Address testAddress;
     Address testMailingAddress;
-//    AccountHolder secondaryOwner_TwoOwnersTest;
-//    AccountHolder primaryOwner_LowAgeTest;
 
     @BeforeEach
     public void setUp(){
@@ -51,22 +48,10 @@ public class AccountHolderTest {
         testMailingAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
 
         accountHolder_Test = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,testMailingAddress);
-//
-//        secondaryOwner_TwoOwnersTest = new AccountHolder("paqito", "Paco", LocalDate.of(1961,1,1), testAddress,testMailingAddress);
-//
-//        primaryOwner_LowAgeTest = new AccountHolder("laurita", "Laura", LocalDate.of(2002,1,1), testAddress,testMailingAddress);
-//
-//        accountHolderRepository.save(primaryOwner_OneOwnerBigAgeTest);
-//
-//        accountHolderRepository.save(secondaryOwner_TwoOwnersTest);
-//
-//        accountHolderRepository.save(primaryOwner_LowAgeTest);
     }
 
     @AfterEach
     public void tearDown(){
-//        checkingRepository.deleteAll();
-//        studentCheckingRepository.deleteAll();
         accountHolderRepository.deleteAll();
     }
 

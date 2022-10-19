@@ -4,6 +4,7 @@ import com.rihaviour.Bank_API_REST.controllers.interfaces.AccountControllerInter
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.Account;
+import com.rihaviour.Bank_API_REST.entities.accounts.Transaction;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.services.interfaces.AccountServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,6 @@ public class AccountController implements AccountControllerInterface {
         return accountService.getAllAccounts();
 
     }
-
-//    @PostMapping("/create_checking/{startingBalance}")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Account createChecking(@PathVariable double startingBalance, @RequestBody AccountHolder primaryOwner) {
-//        return accountService.createChecking(startingBalance, primaryOwner);
-//    }
 
     @PostMapping("/create_checking")
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,6 +48,12 @@ public class AccountController implements AccountControllerInterface {
     @ResponseStatus(HttpStatus.CREATED)
     public AccountHolder createAccountHolder(@RequestBody AccountHolderDTO accountHolderDTO) {
         return accountService.createAccountHolder(accountHolderDTO);
+    }
+
+    @PatchMapping("/transfer_funds")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Transaction transferFunds(@RequestBody Transaction transaction){
+        return accountService.transferFunds(transaction);
     }
 
 

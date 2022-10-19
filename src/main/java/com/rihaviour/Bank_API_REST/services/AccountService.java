@@ -3,6 +3,7 @@ package com.rihaviour.Bank_API_REST.services;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.*;
+import com.rihaviour.Bank_API_REST.others.Money;
 import com.rihaviour.Bank_API_REST.repositories.*;
 import com.rihaviour.Bank_API_REST.services.interfaces.AccountServiceInterface;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
@@ -32,6 +33,12 @@ public class AccountService implements AccountServiceInterface {
 
     @Autowired
     CreditCardRepository creditCardRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -187,6 +194,39 @@ public class AccountService implements AccountServiceInterface {
 
 
         return accountHolderRepository.save(accountHolder);
+    }
+
+
+    public Transaction transferFunds(Transaction transaction) {
+
+        AccountHolder accountHolder = accountHolderRepository.findByUserName(transaction.getOwnerUserName()).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.FORBIDDEN, "The given userName doesn't exist.")
+        );
+
+        Account origin = accountRepository.findById(transaction.getOriginAccountId()).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.FORBIDDEN, "The origin account doesn't exist.")
+        );
+
+        Account destiny = accountRepository.findById(transaction.getDestinyAccountId()).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.FORBIDDEN, "This final account doesn't exist.")
+        );
+
+        if (!origin.getPrimaryOwner().getUserName().equals(transaction.getOwnerUserName() )
+                && origin.getSecondaryOwner() != null){
+            if (!origin.getSecondaryOwner().getUserName().equals(transaction.getOwnerUserName())) {
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This account doesn't belong to this User");
+            }
+        }
+
+        if (origin.getBalance().getAmount().compareTo(transaction.getAmount()) < 0){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not enough Funds");
+        }
+
+        origin.getBalance().decreaseAmount(transaction.getAmount());
+
+        destiny.getBalance().increaseAmount(transaction.getAmount());
+
+        return transactionRepository.save(transaction);
     }
 
 

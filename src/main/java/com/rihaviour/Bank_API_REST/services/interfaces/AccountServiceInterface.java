@@ -3,6 +3,7 @@ package com.rihaviour.Bank_API_REST.services.interfaces;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.Account;
+import com.rihaviour.Bank_API_REST.entities.accounts.Transaction;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface AccountServiceInterface {
     Account createCreditCard(AccountDTO accountDTO);
 
     AccountHolder createAccountHolder(AccountHolderDTO accountHolderDTO);
+
+    Transaction transferFunds(Transaction transaction);
 
     List<Account> getAllAccounts();
 }

@@ -5,6 +5,7 @@ import com.rihaviour.Bank_API_REST.others.Money;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +22,10 @@ public abstract class Account {
     @NotNull
     @JsonIgnore
     private Money balance;
+
+//    @NotBlank
+//    @Column(unique = true)
+//    private String uniqueId;
 
     @ManyToOne
     @NotNull
@@ -94,4 +99,20 @@ public abstract class Account {
     public void setPenaltyFee(BigDecimal penaltyFee) {
         this.penaltyFee = penaltyFee;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+//    public String getUniqueId() {
+//        return uniqueId;
+//    }
+//
+//    public void setUniqueId(String uniqueId) {
+//        this.uniqueId = uniqueId;
+//    }
 }
