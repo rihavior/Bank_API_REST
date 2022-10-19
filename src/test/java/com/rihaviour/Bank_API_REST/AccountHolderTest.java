@@ -144,15 +144,22 @@ public class AccountHolderTest {
 
         AccountHolderDTO accountHolderDTO = new AccountHolderDTO("testUserName","testName",1990,1,35,testAddress,testMailingAddress);
 
-        AccountHolderDTO accountHolderDTO1 = new AccountHolderDTO("testUserName1","testName",1990,2,30,testAddress,testMailingAddress);
+        AccountHolderDTO accountHolderDTO1 = new AccountHolderDTO("testUserName1","testName",1990,2,29,testAddress,testMailingAddress);
 
         AccountHolderDTO accountHolderDTO2 = new AccountHolderDTO("testUserName2","testName",1990,4,31,testAddress,testMailingAddress);
+
+        /**
+         * AÑO BISIESTO
+         */
+        AccountHolderDTO accountHolderDTO3 = new AccountHolderDTO("testUserName2","testName",1988,2,29,testAddress,testMailingAddress);
 
         String body = objectMapper.writeValueAsString(accountHolderDTO);
 
         String body1 = objectMapper.writeValueAsString(accountHolderDTO1);
 
         String body2 = objectMapper.writeValueAsString(accountHolderDTO2);
+
+        String body3 = objectMapper.writeValueAsString(accountHolderDTO3);
 
         MvcResult mvcResult = mockMvc.perform(post("/create_account_holder").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden()).andReturn();
@@ -163,17 +170,22 @@ public class AccountHolderTest {
         MvcResult mvcResult2 = mockMvc.perform(post("/create_account_holder").content(body2).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden()).andReturn();
 
+        MvcResult mvcResult3 = mockMvc.perform(post("/create_account_holder").content(body3).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated()).andReturn();
+
         assertEquals("Wrong birthDate format.", mvcResult.getResponse().getErrorMessage());
         assertEquals("Wrong birthDate format.", mvcResult1.getResponse().getErrorMessage());
         assertEquals("Wrong birthDate format.", mvcResult2.getResponse().getErrorMessage());
+        assertTrue(accountHolderRepository.findByUserName(accountHolderDTO3.getUserName()).isPresent());
+        assertEquals(LocalDate.of(1988,2,29),accountHolderRepository.findByUserName(accountHolderDTO3.getUserName()).get().getDateOfBirth());
 
         /**
          * Utilizando el AccountHolderDTO porque sino el programa funcionaba
-         * pero el objectMapper.writeValueAsString(accountHolder); petaba por el LocalDate
-         * esta ha sido la manera mas elegante de arreglarlo junto con
+         * pero el objectMapper.writeValueAsString(accountHolder); petaba
+         * por el LocalDate por lo que no podia testear.
+         * Esta ha sido la manera mas elegante de arreglarlo junto con
          * el try catch del service para gestionar todas las excepciones que pueda lanzar LocalDate.
-         * Casi escribo los if para los dias por grupos de meses (31, 30, 28/29??  T.T)...
+         * Casi escribo los if para los dias por grupos de meses (31, 30, 28/29??)...  T.T
          */
-
     }
 }
