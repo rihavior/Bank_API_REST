@@ -53,11 +53,13 @@ public class CheckingTest {
 
         Address testAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
 
-        primaryOwner_OneOwnerBigAgeTest = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,"ricardo@test.com");
+        Address testMailingAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
 
-        secondaryOwner_TwoOwnersTest = new AccountHolder("paqito", "Paco", LocalDate.of(1961,1,1), testAddress,"paqito@test.com");
+        primaryOwner_OneOwnerBigAgeTest = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,testMailingAddress);
 
-        primaryOwner_LowAgeTest = new AccountHolder("laurita", "Laura", LocalDate.of(2002,1,1), testAddress,"paqito@test.com");
+        secondaryOwner_TwoOwnersTest = new AccountHolder("paqito", "Paco", LocalDate.of(1961,1,1), testAddress,testMailingAddress);
+
+        primaryOwner_LowAgeTest = new AccountHolder("laurita", "Laura", LocalDate.of(2002,1,1), testAddress,testMailingAddress);
 
         accountHolderRepository.save(primaryOwner_OneOwnerBigAgeTest);
 

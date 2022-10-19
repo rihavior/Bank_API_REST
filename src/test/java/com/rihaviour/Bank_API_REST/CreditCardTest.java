@@ -50,9 +50,11 @@ public class CreditCardTest {
 
         Address testAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
 
-        primaryOwner_OneOwnerTest = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,"ricardo@test.com");
+        Address testMailingAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
 
-        secondaryOwner_TwoOwnersTest = new AccountHolder("paqito", "Paco", LocalDate.of(1961,1,1), testAddress,"paqito@test.com");
+        primaryOwner_OneOwnerTest = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,testMailingAddress);
+
+        secondaryOwner_TwoOwnersTest = new AccountHolder("paqito", "Paco", LocalDate.of(1961,1,1), testAddress,testMailingAddress);
 
         accountHolderRepository.save(primaryOwner_OneOwnerTest);
 

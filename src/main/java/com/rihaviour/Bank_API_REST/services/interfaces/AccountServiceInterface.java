@@ -18,6 +18,7 @@ public interface AccountServiceInterface {
 
     Account createCreditCard(AccountDTO accountDTO);
 
+    AccountHolder createAccountHolder(AccountHolder accountHolder);
 
     List<Account> getAllAccounts();
 }

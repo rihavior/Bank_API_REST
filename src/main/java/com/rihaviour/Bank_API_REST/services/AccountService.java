@@ -153,6 +153,11 @@ public class AccountService implements AccountServiceInterface {
         return creditCardRepository.save(creditCard);
     }
 
+
+    public AccountHolder createAccountHolder(AccountHolder accountHolder) {
+        return accountHolderRepository.save(accountHolder);
+    }
+
     public List<Account> getAllAccounts() {
         if (checkingRepository.count() == 0) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No accounts found");

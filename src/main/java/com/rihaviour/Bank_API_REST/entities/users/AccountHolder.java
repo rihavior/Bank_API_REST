@@ -27,8 +27,8 @@ public class AccountHolder extends User {
 
     @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
     private Address primaryAddress;
-    @NotBlank
-    private String mailingAddress;
+    @Embedded(onEmpty = Embedded.OnEmpty.USE_EMPTY)
+    private Address mailingAddress;
 
     /**
      * Aqui se puden hacer dos listas, una para las cuentas en las que aparezca como primaryOwner
@@ -41,7 +41,7 @@ public class AccountHolder extends User {
     private List<Account> accountList;
 
 
-    public AccountHolder(String userName, String name, LocalDate dateOfBirth,Address primaryAddress, String mailingAddress) {
+    public AccountHolder(String userName, String name, LocalDate dateOfBirth,Address primaryAddress, Address mailingAddress) {
         super(userName, name);
         this.dateOfBirth = dateOfBirth;
         setAge();
@@ -76,11 +76,11 @@ public class AccountHolder extends User {
         this.primaryAddress = primaryAddress;
     }
 
-    public String getMailingAddress() {
+    public Address getMailingAddress() {
         return mailingAddress;
     }
 
-    public void setMailingAddress(String mailingAddress) {
+    public void setMailingAddress(Address mailingAddress) {
         this.mailingAddress = mailingAddress;
     }
 

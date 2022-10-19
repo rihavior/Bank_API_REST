@@ -3,6 +3,7 @@ package com.rihaviour.Bank_API_REST.controllers;
 import com.rihaviour.Bank_API_REST.controllers.interfaces.AccountControllerInterface;
 import com.rihaviour.Bank_API_REST.entities.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.Account;
+import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.services.interfaces.AccountServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,12 @@ public class AccountController implements AccountControllerInterface {
     @ResponseStatus(HttpStatus.CREATED)
     public Account createCreditCard(@RequestBody AccountDTO accountDTO) {
         return accountService.createCreditCard(accountDTO);
+    }
+
+    @PostMapping("/create_account_holder")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AccountHolder createAccountHolder(@RequestBody AccountHolder accountHolder) {
+        return accountService.createAccountHolder(accountHolder);
     }
 
 

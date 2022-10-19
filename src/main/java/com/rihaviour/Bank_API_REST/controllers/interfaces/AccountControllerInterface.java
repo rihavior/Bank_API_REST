@@ -2,6 +2,7 @@ package com.rihaviour.Bank_API_REST.controllers.interfaces;
 
 import com.rihaviour.Bank_API_REST.entities.AccountDTO;
 import com.rihaviour.Bank_API_REST.entities.accounts.Account;
+import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface AccountControllerInterface {
     Account createSavings(AccountDTO accountDTO);
 
     Account createCreditCard(AccountDTO accountDTO);
+
+    AccountHolder createAccountHolder(AccountHolder accountHolder);
 
     List<Account> getAllAccounts();
 }

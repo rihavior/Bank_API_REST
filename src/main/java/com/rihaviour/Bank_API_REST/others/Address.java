@@ -1,18 +1,25 @@
 package com.rihaviour.Bank_API_REST.others;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
 
+    @Column(insertable = false, updatable = false)
     private String streetName;
 
+    @Column(insertable = false, updatable = false)
     private int streetNumber;
 
+    @Column(insertable = false, updatable = false)
     private int postalCode;
 
+
+    @Column(insertable = false, updatable = false)
     private String City;
 
+    @Column(insertable = false, updatable = false)
     private String Country;
 
     public Address() {
