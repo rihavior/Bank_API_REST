@@ -200,15 +200,15 @@ public class AccountService implements AccountServiceInterface {
     public Transaction transferFunds(Transaction transaction) {
 
         AccountHolder accountHolder = accountHolderRepository.findByUserName(transaction.getOwnerUserName()).orElseThrow(
-                ()-> new ResponseStatusException(HttpStatus.FORBIDDEN, "The given userName doesn't exist.")
+                ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The given userName doesn't exist.")
         );
 
         Account origin = accountRepository.findById(transaction.getOriginAccountId()).orElseThrow(
-                ()-> new ResponseStatusException(HttpStatus.FORBIDDEN, "The origin account doesn't exist.")
+                ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The origin account doesn't exist.")
         );
 
         Account destiny = accountRepository.findById(transaction.getDestinyAccountId()).orElseThrow(
-                ()-> new ResponseStatusException(HttpStatus.FORBIDDEN, "This final account doesn't exist.")
+                ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The final account doesn't exist.")
         );
 
         if (!origin.getPrimaryOwner().getUserName().equals(transaction.getOwnerUserName() )

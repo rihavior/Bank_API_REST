@@ -37,6 +37,14 @@ public class Checking extends Account{
         this.status = Status.ACTIVE;
     }
 
+    public Checking(Money balance, AccountHolder primaryOwner,AccountHolder secondaryOwner) {
+        super(balance, primaryOwner, secondaryOwner);
+        this.secretKey = "1234";
+        this.minimumBalance = new BigDecimal(250);
+        this.monthlyMaintenanceFee = new BigDecimal(12);
+        this.status = Status.ACTIVE;
+    }
+
     public Long getId() {
         return id;
     }
