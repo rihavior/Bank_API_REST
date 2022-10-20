@@ -6,7 +6,9 @@ import com.rihaviour.Bank_API_REST.entities.accounts.Account;
 import com.rihaviour.Bank_API_REST.entities.accounts.Transaction;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountServiceInterface {
 
@@ -21,6 +23,10 @@ public interface AccountServiceInterface {
     AccountHolder createAccountHolder(AccountHolderDTO accountHolderDTO);
 
     Transaction transferFunds(Transaction transaction);
+
+    Optional<Account> getAccount(Long accountId);
+
+    Account modifyBalance(AccountDTO accountDTO);
 
     List<Account> getAllAccounts();
 }

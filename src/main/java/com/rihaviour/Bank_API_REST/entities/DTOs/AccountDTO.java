@@ -17,6 +17,8 @@ public class AccountDTO {
     @NotBlank
     private String primaryOwnerUsername;
 
+    private Long accountId;
+
     private String secondaryOwnerUsername;
 
     private BigDecimal interestRate;
@@ -45,6 +47,12 @@ public class AccountDTO {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
     }
+
+    public AccountDTO(Money balance, Long accountId) {
+        this.balance = balance;
+        this.accountId = accountId;
+    }
+
     public AccountDTO(Money balance, String primaryOwnerUsername, BigDecimal interestRate) {
         this.balance = balance;
         this.primaryOwnerUsername = primaryOwnerUsername;
@@ -102,5 +110,13 @@ public class AccountDTO {
 
     public void setCreditLimit(BigDecimal creditLimit) {
         this.creditLimit = creditLimit;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 }

@@ -2,6 +2,8 @@ package com.rihaviour.Bank_API_REST;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.accounts.CreditCard;
+import com.rihaviour.Bank_API_REST.entities.accounts.Savings;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
@@ -20,6 +22,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -231,5 +234,25 @@ public class CreditCardTest {
                 .andExpect(status().isForbidden()).andReturn();
 
         assertEquals("Forbidden Interest Rate should be between 0.1000 and 0.2000.", mvcResult.getResponse().getErrorMessage());
+    }
+
+    @Test
+    @DisplayName("InterestRate is applied when it's been more than a month from lastInterestApplied.")
+    void getBalance_PlusThanMonthSinceLastInterestApplied_ApplyInterestRate() throws Exception {
+
+        CreditCard creditCard = new CreditCard(new Money(new BigDecimal(200)),primaryOwner_OneOwnerTest);
+        CreditCard creditCard1 = new CreditCard(new Money(new BigDecimal(200)),primaryOwner_OneOwnerTest);
+
+        creditCard.setLastInterestApplied(LocalDate.of(2022,9,20));
+        creditCard1.setLastInterestApplied(LocalDate.of(2022,7,20));
+
+        BigDecimal balance = new BigDecimal("200.00");
+
+        BigDecimal newBalanceOneMonth = balance.add(balance.multiply(creditCard.getInterestRate()));
+
+        BigDecimal newBalanceThreeMonths = balance.add(balance.multiply(creditCard1.getInterestRate().multiply(new BigDecimal(3))));
+
+        assertEquals(newBalanceOneMonth.setScale(2, RoundingMode.HALF_EVEN), creditCard.getBalance().getAmount());
+        assertEquals(newBalanceThreeMonths.setScale(2, RoundingMode.HALF_EVEN), creditCard1.getBalance().getAmount());
     }
 }

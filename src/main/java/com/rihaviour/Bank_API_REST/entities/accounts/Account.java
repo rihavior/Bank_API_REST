@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -37,8 +38,7 @@ public abstract class Account {
     @JoinColumn(name = "secondary_owner")
     private AccountHolder secondaryOwner;
 
-
-    private LocalDate creationDate;
+    private final LocalDate creationDate = LocalDate.now();
 
     private BigDecimal penaltyFee;
 
@@ -46,14 +46,12 @@ public abstract class Account {
         this.balance = balance;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
-        this.creationDate = LocalDate.now();
         this.penaltyFee = new BigDecimal(40);
     }
 
     public Account(Money balance, AccountHolder primaryOwner) {
         this.balance = balance;
         this.primaryOwner = primaryOwner;
-        this.creationDate = LocalDate.now();
         this.penaltyFee = new BigDecimal(40);
     }
 
@@ -86,10 +84,6 @@ public abstract class Account {
 
     public LocalDate getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
     }
 
     public BigDecimal getPenaltyFee() {

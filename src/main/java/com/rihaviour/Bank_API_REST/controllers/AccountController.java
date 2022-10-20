@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AccountController implements AccountControllerInterface {
@@ -23,8 +24,14 @@ public class AccountController implements AccountControllerInterface {
     @ResponseStatus(HttpStatus.OK)
     public List<Account> getAllAccounts() {
         return accountService.getAllAccounts();
-
     }
+
+    @GetMapping("/get_account")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Optional<Account> getAccount(@RequestBody Long accountId) {
+        return accountService.getAccount(accountId);
+    }
+
 
     @PostMapping("/create_checking")
     @ResponseStatus(HttpStatus.CREATED)
@@ -55,6 +62,13 @@ public class AccountController implements AccountControllerInterface {
     public Transaction transferFunds(@RequestBody Transaction transaction){
         return accountService.transferFunds(transaction);
     }
+
+    @PatchMapping("/modify_balance")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Account modifyBalance (@RequestBody AccountDTO accountDTO){
+        return accountService.modifyBalance(accountDTO);
+    }
+
 
 
 

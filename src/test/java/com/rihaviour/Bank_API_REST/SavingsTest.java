@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.accounts.Checking;
+import com.rihaviour.Bank_API_REST.entities.accounts.Savings;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
@@ -22,7 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -189,7 +193,7 @@ public class SavingsTest {
 
     @Test
     @DisplayName("Creates savings with given balance < minimumBalance(100), throws exception.")
-    void createSavings_WithGivenBalanceGreaterThanMax_SetIt() throws Exception {
+    void createSavings_WithGivenBalanceGreaterThanMax_ThrowsException() throws Exception {
 
         AccountDTO accountDTO = new AccountDTO(new Money(new BigDecimal(50)), primaryOwner_OneOwnerTest.getUserName());
 
@@ -203,4 +207,22 @@ public class SavingsTest {
         assertEquals("The Balance cannot be lower than min(100).", mvcResult.getResponse().getErrorMessage());
     }
 
+    @Test
+    @DisplayName("InterestRate is applied when it's been more than a year from lastInterestApplied.")
+    void getBalance_PlusThanYearSinceLastInterestApplied_ApplyInterestRate() throws Exception {
+
+        Savings savings = new Savings(new Money(new BigDecimal(200)),primaryOwner_OneOwnerTest);
+        Savings savings1 = new Savings(new Money(new BigDecimal(200)),primaryOwner_OneOwnerTest);
+
+        savings.setLastInterestApplied(LocalDate.of(2021,9,20));
+        savings1.setLastInterestApplied(LocalDate.of(2019,7,20));
+
+        BigDecimal balance = new BigDecimal("200.00");
+
+        BigDecimal newBalanceOneYear = balance.add(balance.multiply(savings.getInterestRate()));
+        BigDecimal newBalanceThreeYears = balance.add(balance.multiply(savings1.getInterestRate().multiply(new BigDecimal(3))));
+
+        assertEquals(newBalanceOneYear.setScale(2, RoundingMode.HALF_EVEN), savings.getBalance().getAmount());
+        assertEquals(newBalanceThreeYears.setScale(2, RoundingMode.HALF_EVEN), savings1.getBalance().getAmount());
+    }
 }

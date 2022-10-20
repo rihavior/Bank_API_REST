@@ -10,10 +10,7 @@ import com.rihaviour.Bank_API_REST.entities.accounts.Transaction;
 import com.rihaviour.Bank_API_REST.entities.users.AccountHolder;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
-import com.rihaviour.Bank_API_REST.repositories.AccountHolderRepository;
-import com.rihaviour.Bank_API_REST.repositories.AccountRepository;
-import com.rihaviour.Bank_API_REST.repositories.CheckingRepository;
-import com.rihaviour.Bank_API_REST.repositories.SavingsRepository;
+import com.rihaviour.Bank_API_REST.repositories.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,6 +49,9 @@ public class TransactionTest {
     AccountHolderRepository accountHolderRepository;
 
     @Autowired
+    TransactionRepository transactionRepository;
+
+    @Autowired
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
 
@@ -77,19 +77,20 @@ public class TransactionTest {
 
         Checking checking = new Checking(new Money(new BigDecimal(1000)),accountHolder);
 
-        Checking checking1 = new Checking(new Money(new BigDecimal(5000)),accountHolder1);
+        Savings savings = new Savings(new Money(new BigDecimal(5000)),accountHolder1);
 
         checkingRepository.save(checking);
-        checkingRepository.save(checking1);
+        savingsRepository.save(savings);
 
     }
 
     @AfterEach
     public void tearDown(){
+        accountRepository.deleteAll();
         checkingRepository.deleteAll();
         savingsRepository.deleteAll();
-        accountRepository.deleteAll();
         accountHolderRepository.deleteAll();
+        transactionRepository.deleteAll();
     }
 
     @Test
@@ -106,6 +107,7 @@ public class TransactionTest {
         assertTrue(accountRepository.findById(transaction.getDestinyAccountId()).isPresent());
         assertEquals(new BigDecimal("500.00"), accountRepository.findById(transaction.getOriginAccountId()).get().getBalance().getAmount());
         assertEquals(new BigDecimal("5500.00"), accountRepository.findById(transaction.getDestinyAccountId()).get().getBalance().getAmount());
+        assertEquals(1, transactionRepository.count());
     }
 
     @Test
@@ -122,6 +124,7 @@ public class TransactionTest {
         assertTrue(accountRepository.findById(transaction.getDestinyAccountId()).isPresent());
         assertEquals(new BigDecimal("500.00"), accountRepository.findById(transaction.getOriginAccountId()).get().getBalance().getAmount());
         assertEquals(new BigDecimal("5500.00"), accountRepository.findById(transaction.getDestinyAccountId()).get().getBalance().getAmount());
+        assertEquals(1, transactionRepository.count());
     }
 
     @Test
@@ -192,5 +195,35 @@ public class TransactionTest {
         assertEquals(new BigDecimal("1000.00") , accountRepository.findById(1L).get().getBalance().getAmount());
         assertTrue(accountRepository.findById(2L).isPresent());
         assertEquals(new BigDecimal("5000.00") , accountRepository.findById(2L).get().getBalance().getAmount());
+    }
+
+    @Test
+    @DisplayName("Transfer funds from Checking let balance lower than minimum balance apply penalty fee.")
+    public void transferFunds_CheckingBalanceLowerThanMin_ApplyPenaltyFee() throws Exception {
+
+        Transaction transaction = new Transaction(new BigDecimal(800),"rihavior",1L,2L);
+
+        String body = objectMapper.writeValueAsString(transaction);
+
+        MvcResult mvcResult = mockMvc.perform(patch("/transfer_funds").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted()).andReturn();
+
+        assertTrue(accountRepository.findById(1L).isPresent());
+        assertEquals(new BigDecimal("160.00") , accountRepository.findById(1L).get().getBalance().getAmount());
+    }
+
+    @Test
+    @DisplayName("Transfer funds from Savings let balance lower than minimum balance apply penalty fee.")
+    public void transferFunds_SavingsBalanceLowerThanMin_ApplyPenaltyFee() throws Exception {
+
+        Transaction transaction = new Transaction(new BigDecimal(4990),"laurita",2L,1L);
+
+        String body = objectMapper.writeValueAsString(transaction);
+
+        MvcResult mvcResult = mockMvc.perform(patch("/transfer_funds").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isAccepted()).andReturn();
+
+        assertTrue(accountRepository.findById(2L).isPresent());
+        assertEquals(new BigDecimal("-30.00") , accountRepository.findById(2L).get().getBalance().getAmount());
     }
 }

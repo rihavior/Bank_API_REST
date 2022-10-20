@@ -14,7 +14,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountService implements AccountServiceInterface {
@@ -226,9 +229,35 @@ public class AccountService implements AccountServiceInterface {
 
         destiny.getBalance().increaseAmount(transaction.getAmount());
 
+        if (origin instanceof Checking){
+            if (origin.getBalance().getAmount().compareTo(((Checking) origin).getMinimumBalance()) < 0){
+                origin.getBalance().decreaseAmount(origin.getPenaltyFee());
+            }
+        } else if (origin instanceof Savings){
+            if (origin.getBalance().getAmount().compareTo(((Savings) origin).getMinimumBalance()) < 0){
+                origin.getBalance().decreaseAmount(origin.getPenaltyFee());
+            }
+        }
         return transactionRepository.save(transaction);
     }
 
+    public Optional<Account> getAccount(Long accountId) {
+        Account account = accountRepository.findById(accountId).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "AccountId not found.")
+        );
+        return Optional.ofNullable(account);
+    }
+
+    public Account modifyBalance(AccountDTO accountDTO) {
+
+        Account account = accountRepository.findById(accountDTO.getAccountId()).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "AccountId not found.")
+        );
+
+        account.setBalance(accountDTO.getBalance());
+
+        return accountRepository.save(account);
+    }
 
     public List<Account> getAllAccounts() {
         if (checkingRepository.count() == 0) {

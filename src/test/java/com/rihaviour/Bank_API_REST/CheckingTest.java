@@ -2,6 +2,7 @@ package com.rihaviour.Bank_API_REST;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rihaviour.Bank_API_REST.entities.DTOs.AccountDTO;
+import com.rihaviour.Bank_API_REST.entities.accounts.Checking;
 import com.rihaviour.Bank_API_REST.others.Address;
 import com.rihaviour.Bank_API_REST.others.Money;
 import com.rihaviour.Bank_API_REST.repositories.AccountHolderRepository;

@@ -12,6 +12,8 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 public class Savings extends Account{
@@ -26,6 +28,8 @@ public class Savings extends Account{
     @DecimalMax(value = "0.5", message = "The given interestRate is greater than max.")//todo ESTO FUNIONARA???
     @Digits(integer = 1, fraction = 4)
     private BigDecimal interestRate;
+
+    private LocalDate lastInterestApplied = LocalDate.now();
 
     public Savings(Money balance, AccountHolder primaryOwner) {
         super(balance, primaryOwner);
@@ -48,6 +52,21 @@ public class Savings extends Account{
         this.minimumBalance = new BigDecimal(100);
         this.status = Status.ACTIVE;
         this.interestRate = new BigDecimal("0.0025");
+    }
+
+    @Override
+    public Money getBalance() {
+        if (Period.between(lastInterestApplied,LocalDate.now()).getYears() > 0) {
+            setBalance(new Money(super.getBalance().getAmount()
+                    .add(super.getBalance().getAmount()
+                            .multiply(interestRate
+                                    .multiply(new BigDecimal(Period.between(lastInterestApplied,LocalDate.now()).getYears()))
+                            )
+                    )
+            ));
+            setLastInterestApplied(LocalDate.now());
+        }
+        return super.getBalance();
     }
 
     public Long getId() {
@@ -88,5 +107,13 @@ public class Savings extends Account{
 
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
+    }
+
+    public LocalDate getLastInterestApplied() {
+        return lastInterestApplied;
+    }
+
+    public void setLastInterestApplied(LocalDate lastInterestApplied) {
+        this.lastInterestApplied = lastInterestApplied;
     }
 }
