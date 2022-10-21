@@ -87,8 +87,8 @@ public class CheckingTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        Assertions.assertTrue(checkingRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerBigAgeTest.getUserName()).isPresent());
-        Assertions.assertTrue(checkingRepository.findBySecondaryOwnerUserName(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
+        Assertions.assertTrue(checkingRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerBigAgeTest.getUserName()).isPresent());
+        Assertions.assertTrue(checkingRepository.findBySecondaryOwnerUsername(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class CheckingTest {
         MvcResult mvcResult =mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        Assertions.assertTrue(checkingRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerBigAgeTest.getUserName()).isPresent());
+        Assertions.assertTrue(checkingRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerBigAgeTest.getUserName()).isPresent());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class CheckingTest {
         MvcResult mvcResult =mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        Assertions.assertTrue(checkingRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerBigAgeTest.getUserName()).isPresent());
+        Assertions.assertTrue(checkingRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerBigAgeTest.getUserName()).isPresent());
     }
 
     @Test
@@ -136,7 +136,7 @@ public class CheckingTest {
         MvcResult mvcResult =mockMvc.perform(post("/create_checking").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        Assertions.assertTrue(studentCheckingRepository.findByPrimaryOwnerUserName(primaryOwner_LowAgeTest.getUserName()).isPresent());
+        Assertions.assertTrue(studentCheckingRepository.findByPrimaryOwnerUsername(primaryOwner_LowAgeTest.getUserName()).isPresent());
     }
 
     @Test

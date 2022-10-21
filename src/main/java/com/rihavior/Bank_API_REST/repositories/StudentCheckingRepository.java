@@ -9,9 +9,9 @@ import java.util.Optional;
 @Repository
 public interface StudentCheckingRepository extends JpaRepository<StudentChecking, Long> {
 
-    Optional<StudentChecking> findByPrimaryOwnerUserName(String primaryOwnerUserName);
+    Optional<StudentChecking> findByPrimaryOwnerUsername(String primaryOwnerUserName);
 
-    Optional<StudentChecking> findBySecondaryOwnerUserName(String secondaryOwnerUserName);
+    Optional<StudentChecking> findBySecondaryOwnerUsername(String secondaryOwnerUserName);
 
 
     Optional<StudentChecking> findByPrimaryOwnerId(Long primaryOwnerId);

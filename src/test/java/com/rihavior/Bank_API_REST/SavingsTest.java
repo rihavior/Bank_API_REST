@@ -81,8 +81,8 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        assertTrue(savingsRepository.findBySecondaryOwnerUserName(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
+        assertTrue(savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertTrue(savingsRepository.findBySecondaryOwnerUsername(secondaryOwner_TwoOwnersTest.getUserName()).isPresent());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertTrue(savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
     }
 
     @Test
@@ -114,8 +114,8 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        Assertions.assertEquals(new BigDecimal("0.0025"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
+        assertTrue(savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        Assertions.assertEquals(new BigDecimal("0.0025"), savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
     }
 
     @Test
@@ -131,8 +131,8 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        Assertions.assertEquals(new BigDecimal("0.1234"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
+        assertTrue(savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        Assertions.assertEquals(new BigDecimal("0.1234"), savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
     }
 
     @Test
@@ -164,8 +164,8 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        assertEquals(new BigDecimal("1000.00"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getBalance().getAmount());
+        assertTrue(savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("1000.00"), savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getBalance().getAmount());
     }
 
     @Test
@@ -181,8 +181,8 @@ public class SavingsTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_savings").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        assertEquals(new BigDecimal("500.00"), savingsRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getBalance().getAmount());
+        assertTrue(savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("500.00"), savingsRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getBalance().getAmount());
     }
 
     @Test

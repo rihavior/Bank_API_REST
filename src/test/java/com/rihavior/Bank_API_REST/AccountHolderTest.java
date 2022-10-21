@@ -65,7 +65,7 @@ public class AccountHolderTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_account_holder").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(accountHolderRepository.findByUserName(accountHolderDTO.getUserName()).isPresent());
+        assertTrue(accountHolderRepository.findByUsername(accountHolderDTO.getUserName()).isPresent());
     }
 
     @Test
@@ -158,8 +158,8 @@ public class AccountHolderTest {
         assertEquals("Wrong birthDate format.", mvcResult.getResponse().getErrorMessage());
         assertEquals("Wrong birthDate format.", mvcResult1.getResponse().getErrorMessage());
         assertEquals("Wrong birthDate format.", mvcResult2.getResponse().getErrorMessage());
-        assertTrue(accountHolderRepository.findByUserName(accountHolderDTO3.getUserName()).isPresent());
-        assertEquals(LocalDate.of(1988,2,29),accountHolderRepository.findByUserName(accountHolderDTO3.getUserName()).get().getDateOfBirth());
+        assertTrue(accountHolderRepository.findByUsername(accountHolderDTO3.getUserName()).isPresent());
+        assertEquals(LocalDate.of(1988,2,29),accountHolderRepository.findByUsername(accountHolderDTO3.getUserName()).get().getDateOfBirth());
 
         /**
          * Utilizando el AccountHolderDTO porque sino el programa funcionaba

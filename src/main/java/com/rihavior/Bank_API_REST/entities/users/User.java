@@ -17,7 +17,7 @@ public abstract class User {
 
     @NotBlank
     @Column(unique = true)
-    private String userName;
+    private String username;
 
     private String password;
 
@@ -29,8 +29,8 @@ public abstract class User {
     public User() {
     }
 
-    public User(String userName, String name) {
-        this.userName = userName;
+    public User(String username, String name) {
+        this.username = username;
         this.name = name;
     }
 
@@ -43,11 +43,11 @@ public abstract class User {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public String getName() {
@@ -56,5 +56,21 @@ public abstract class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

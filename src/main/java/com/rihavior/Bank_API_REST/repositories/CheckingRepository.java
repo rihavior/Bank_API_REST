@@ -10,8 +10,9 @@ import java.util.Optional;
 @Repository
 public interface CheckingRepository extends JpaRepository<Account, Long> {
 
-    Optional<Checking> findByPrimaryOwnerUserName(String primaryOwnerUserName);
+    Optional<Checking> findByPrimaryOwnerUsername(String primaryOwnerUserName);
 
-    Optional<Checking> findBySecondaryOwnerUserName(String secondaryOwnerUserName);
+    Optional<Checking> findBySecondaryOwnerUsername(String secondaryOwnerUserName);
 
 }
+

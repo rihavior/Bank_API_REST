@@ -84,7 +84,7 @@ public class CreditCardTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_credit_card").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertTrue(creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class CreditCardTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_credit_card").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertTrue(creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
     }
 
     @Test
@@ -116,8 +116,8 @@ public class CreditCardTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_credit_card").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        assertEquals(new BigDecimal("100.00"), creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getCreditLimit());
+        assertTrue(creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("100.00"), creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getCreditLimit());
     }
 
     @Test
@@ -133,8 +133,8 @@ public class CreditCardTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_credit_card").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        assertEquals(new BigDecimal("1000.00"), creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getCreditLimit());
+        assertTrue(creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("1000.00"), creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getCreditLimit());
     }
 
     @Test
@@ -182,8 +182,8 @@ public class CreditCardTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_credit_card").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        assertEquals(new BigDecimal("0.2000"), creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
+        assertTrue(creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("0.2000"), creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
     }
 
     @Test
@@ -199,8 +199,8 @@ public class CreditCardTest {
         MvcResult mvcResult = mockMvc.perform(post("/create_credit_card").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
 
-        assertTrue(creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).isPresent());
-        assertEquals(new BigDecimal("0.1234"), creditCardRepository.findByPrimaryOwnerUserName(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
+        assertTrue(creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).isPresent());
+        assertEquals(new BigDecimal("0.1234"), creditCardRepository.findByPrimaryOwnerUsername(primaryOwner_OneOwnerTest.getUserName()).get().getInterestRate());
     }
 
     @Test

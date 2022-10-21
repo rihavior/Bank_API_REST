@@ -8,7 +8,6 @@ import com.rihavior.Bank_API_REST.entities.users.AccountHolder;
 import com.rihavior.Bank_API_REST.others.Address;
 import com.rihavior.Bank_API_REST.others.Money;
 import com.rihavior.Bank_API_REST.repositories.*;
-import com.rihaviour.Bank_API_REST.repositories.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

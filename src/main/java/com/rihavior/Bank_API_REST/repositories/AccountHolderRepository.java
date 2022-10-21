@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AccountHolderRepository extends JpaRepository<AccountHolder, Long> {
 
-    Optional<AccountHolder> findByUserName(String username);
+    Optional<AccountHolder> findByUsername(String username);
 }

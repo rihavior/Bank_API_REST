@@ -5,8 +5,6 @@ import com.rihavior.Bank_API_REST.entities.accounts.*;
 import com.rihavior.Bank_API_REST.repositories.*;
 import com.rihavior.Bank_API_REST.services.interfaces.AccountServiceInterface;
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountHolderDTO;
-import com.rihaviour.Bank_API_REST.entities.accounts.*;
-import com.rihaviour.Bank_API_REST.repositories.*;
 import com.rihavior.Bank_API_REST.entities.users.AccountHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,12 +52,12 @@ public class AccountService implements AccountServiceInterface {
         checking.setSecondaryOwner(null);
         studentChecking.setSecondaryOwner(null);
 
-        AccountHolder primaryOwner = accountHolderRepository.findByUserName(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
+        AccountHolder primaryOwner = accountHolderRepository.findByUsername(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Primary Owner doesn't Exists")
         );
 
         if (accountDTO.getSecondaryOwnerUsername() != null) {
-            AccountHolder secondaryOwner = accountHolderRepository.findByUserName(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
+            AccountHolder secondaryOwner = accountHolderRepository.findByUsername(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Secondary Owner doesn't Exists"));
             checking.setSecondaryOwner(secondaryOwner);
             studentChecking.setSecondaryOwner(secondaryOwner);
@@ -89,12 +87,12 @@ public class AccountService implements AccountServiceInterface {
 
         savings.setSecondaryOwner(null);
 
-        AccountHolder primaryOwner = accountHolderRepository.findByUserName(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
+        AccountHolder primaryOwner = accountHolderRepository.findByUsername(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Primary Owner doesn't Exists")
         );
 
         if (accountDTO.getSecondaryOwnerUsername() != null) {
-            AccountHolder secondaryOwner = accountHolderRepository.findByUserName(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
+            AccountHolder secondaryOwner = accountHolderRepository.findByUsername(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Secondary Owner doesn't Exists"));
             savings.setSecondaryOwner(secondaryOwner);
         }
@@ -131,14 +129,14 @@ public class AccountService implements AccountServiceInterface {
 
         creditCard.setSecondaryOwner(null);
 
-        AccountHolder primaryOwner = accountHolderRepository.findByUserName(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
+        AccountHolder primaryOwner = accountHolderRepository.findByUsername(accountDTO.getPrimaryOwnerUsername()).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Primary Owner doesn't Exists")
         );
 
         creditCard.setPrimaryOwner(primaryOwner);
 
         if (accountDTO.getSecondaryOwnerUsername() != null) {
-            AccountHolder secondaryOwner = accountHolderRepository.findByUserName(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
+            AccountHolder secondaryOwner = accountHolderRepository.findByUsername(accountDTO.getSecondaryOwnerUsername()).orElseThrow(
                     () -> new ResponseStatusException(HttpStatus.FORBIDDEN, "The User introduced as Secondary Owner doesn't Exists"));
             creditCard.setSecondaryOwner(secondaryOwner);
         }
@@ -176,7 +174,7 @@ public class AccountService implements AccountServiceInterface {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The UserName can't be null.");
         }
 
-        if (accountHolderRepository.findByUserName(accountHolderDTO.getUserName()).isPresent()) {
+        if (accountHolderRepository.findByUsername(accountHolderDTO.getUserName()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The UserName: " + accountHolderDTO.getUserName() + ", already exists.");
         } accountHolder.setUserName(accountHolderDTO.getUserName());
 
@@ -201,7 +199,7 @@ public class AccountService implements AccountServiceInterface {
 
     public Transaction transferFunds(Transaction transaction) {
 
-        AccountHolder accountHolder = accountHolderRepository.findByUserName(transaction.getOwnerUserName()).orElseThrow(
+        AccountHolder accountHolder = accountHolderRepository.findByUsername(transaction.getOwnerUserName()).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The given userName doesn't exist.")
         );
 

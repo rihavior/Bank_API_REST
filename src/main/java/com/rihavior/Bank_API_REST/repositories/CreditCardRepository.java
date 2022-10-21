@@ -9,8 +9,8 @@ import java.util.Optional;
 @Repository
 public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
 
-    Optional<CreditCard> findByPrimaryOwnerUserName(String primaryOwnerUserName);
+    Optional<CreditCard> findByPrimaryOwnerUsername(String primaryOwnerUserName);
 
-    Optional<CreditCard> findBySecondaryOwnerUserName(String secondaryOwnerUserName);
+    Optional<CreditCard> findBySecondaryOwnerUsername(String secondaryOwnerUserName);
 
 }
