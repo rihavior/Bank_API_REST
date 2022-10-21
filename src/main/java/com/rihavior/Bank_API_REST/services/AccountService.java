@@ -2,6 +2,7 @@ package com.rihavior.Bank_API_REST.services;
 
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihavior.Bank_API_REST.entities.accounts.*;
+import com.rihavior.Bank_API_REST.others.Role;
 import com.rihavior.Bank_API_REST.repositories.*;
 import com.rihavior.Bank_API_REST.services.interfaces.AccountServiceInterface;
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountHolderDTO;
@@ -42,6 +43,9 @@ public class AccountService implements AccountServiceInterface {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     public Account createChecking(AccountDTO accountDTO) {
 
@@ -192,14 +196,17 @@ public class AccountService implements AccountServiceInterface {
         accountHolder.setPrimaryAddress(accountHolderDTO.getPrimaryAddress());
         accountHolder.setMailingAddress(accountHolderDTO.getMailingAddress());
 
+        accountHolderRepository.save(accountHolder);
 
-        return accountHolderRepository.save(accountHolder);
+//        roleRepository.save(new Role("HOLDER", accountHolder));
+
+        return accountHolder;
     }
 
 
     public Transaction transferFunds(Transaction transaction) {
 
-        AccountHolder accountHolder = accountHolderRepository.findByUsername(transaction.getOwnerUserName()).orElseThrow(
+        AccountHolder accountHolder = accountHolderRepository.findByUsername(transaction.getUsername()).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The given userName doesn't exist.")
         );
 
@@ -207,13 +214,13 @@ public class AccountService implements AccountServiceInterface {
                 ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The origin account doesn't exist.")
         );
 
-        Account destiny = accountRepository.findById(transaction.getDestinyAccountId()).orElseThrow(
+        Account destiny = accountRepository.findById(transaction.getFinalAccountId()).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The final account doesn't exist.")
         );
 
-        if (!origin.getPrimaryOwner().getUserName().equals(transaction.getOwnerUserName() )
+        if (!origin.getPrimaryOwner().getUserName().equals(transaction.getUsername() )
                 && origin.getSecondaryOwner() != null){
-            if (!origin.getSecondaryOwner().getUserName().equals(transaction.getOwnerUserName())) {
+            if (!origin.getSecondaryOwner().getUserName().equals(transaction.getUsername())) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "This account doesn't belong to this User");
             }
         }

@@ -1,6 +1,8 @@
 package com.rihavior.Bank_API_REST.entities.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rihavior.Bank_API_REST.others.Role;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,7 +23,8 @@ public abstract class User {
 
     private String password;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Role> roles = new HashSet<>();
 
     @NotBlank
@@ -32,6 +35,7 @@ public abstract class User {
     public User(String username, String name) {
         this.username = username;
         this.name = name;
+        setPassword(new BCryptPasswordEncoder().encode("1234"));
     }
 
     public Long getId() {

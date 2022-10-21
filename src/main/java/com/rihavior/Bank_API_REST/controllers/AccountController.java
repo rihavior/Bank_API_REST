@@ -68,9 +68,4 @@ public class AccountController implements AccountControllerInterface {
     public Account modifyBalance (@RequestBody AccountDTO accountDTO){
         return accountService.modifyBalance(accountDTO);
     }
-
-
-
-
-
 }

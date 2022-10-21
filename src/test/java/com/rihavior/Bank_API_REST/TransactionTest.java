@@ -97,9 +97,9 @@ public class TransactionTest {
                 .andExpect(status().isAccepted()).andReturn();
 
         assertTrue(accountRepository.findById(transaction.getOriginAccountId()).isPresent());
-        assertTrue(accountRepository.findById(transaction.getDestinyAccountId()).isPresent());
+        assertTrue(accountRepository.findById(transaction.getFinalAccountId()).isPresent());
         Assertions.assertEquals(new BigDecimal("500.00"), accountRepository.findById(transaction.getOriginAccountId()).get().getBalance().getAmount());
-        Assertions.assertEquals(new BigDecimal("5500.00"), accountRepository.findById(transaction.getDestinyAccountId()).get().getBalance().getAmount());
+        Assertions.assertEquals(new BigDecimal("5500.00"), accountRepository.findById(transaction.getFinalAccountId()).get().getBalance().getAmount());
         assertEquals(1, transactionRepository.count());
     }
 
@@ -114,9 +114,9 @@ public class TransactionTest {
                 .andExpect(status().isAccepted()).andReturn();
 
         assertTrue(accountRepository.findById(transaction.getOriginAccountId()).isPresent());
-        assertTrue(accountRepository.findById(transaction.getDestinyAccountId()).isPresent());
+        assertTrue(accountRepository.findById(transaction.getFinalAccountId()).isPresent());
         Assertions.assertEquals(new BigDecimal("500.00"), accountRepository.findById(transaction.getOriginAccountId()).get().getBalance().getAmount());
-        Assertions.assertEquals(new BigDecimal("5500.00"), accountRepository.findById(transaction.getDestinyAccountId()).get().getBalance().getAmount());
+        Assertions.assertEquals(new BigDecimal("5500.00"), accountRepository.findById(transaction.getFinalAccountId()).get().getBalance().getAmount());
         assertEquals(1, transactionRepository.count());
     }
 
@@ -212,6 +212,8 @@ public class TransactionTest {
         Transaction transaction = new Transaction(new BigDecimal(4990),"laurita",2L,1L);
 
         String body = objectMapper.writeValueAsString(transaction);
+
+        System.out.println(body);
 
         MvcResult mvcResult = mockMvc.perform(patch("/transfer_funds").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isAccepted()).andReturn();

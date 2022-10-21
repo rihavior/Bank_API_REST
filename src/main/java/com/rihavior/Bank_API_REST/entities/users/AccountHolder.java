@@ -3,12 +3,15 @@ package com.rihavior.Bank_API_REST.entities.users;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rihavior.Bank_API_REST.entities.accounts.Account;
 import com.rihavior.Bank_API_REST.others.Address;
+import com.rihavior.Bank_API_REST.others.Role;
 import org.springframework.data.relational.core.mapping.Embedded;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
@@ -39,12 +42,16 @@ public class AccountHolder extends User {
     private List<Account> accountList;
 
 
+
     public AccountHolder(String userName, String name, LocalDate dateOfBirth,Address primaryAddress, Address mailingAddress) {
-        super(userName, name);
+        super(userName,name);
         this.dateOfBirth = dateOfBirth;
         setAge();
         this.primaryAddress = primaryAddress;
         this.mailingAddress = mailingAddress;
+//        getRoles().add(new Role("HOLDER",this));
+//        setRoles(new HashSet<>(List.of(new Role("HOLDER", this))));
+
     }
 
     public AccountHolder() {

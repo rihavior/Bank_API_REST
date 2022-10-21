@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 public class Transaction {
@@ -16,7 +15,7 @@ public class Transaction {
 
     private BigDecimal amount;
 
-    private String ownerUserName;
+    private String username;
 
     private Long originAccountId;
 
@@ -24,9 +23,9 @@ public class Transaction {
 
 //    private LocalDateTime creationDate = LocalDateTime.now();
 
-    public Transaction(BigDecimal amount, String ownerUserName, Long originAccountId, Long finalAccountId) {
+    public Transaction(BigDecimal amount, String username, Long originAccountId, Long finalAccountId) {
         this.amount = amount;
-        this.ownerUserName = ownerUserName;
+        this.username = username;
         this.originAccountId = originAccountId;
         this.finalAccountId = finalAccountId;
     }
@@ -58,20 +57,12 @@ public class Transaction {
         this.originAccountId = originAccountId;
     }
 
-    public Long getDestinyAccountId() {
-        return finalAccountId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setDestinyAccountId(Long finalAccountId) {
-        this.finalAccountId = finalAccountId;
-    }
-
-    public String getOwnerUserName() {
-        return ownerUserName;
-    }
-
-    public void setOwnerUserName(String ownerUserName) {
-        this.ownerUserName = ownerUserName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Long getFinalAccountId() {

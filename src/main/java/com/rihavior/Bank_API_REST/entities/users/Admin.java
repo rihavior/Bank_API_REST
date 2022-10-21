@@ -12,9 +12,8 @@ public class Admin extends User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public Admin(String userName, String name, Long id) {
-        super(userName, name);
-        this.id = id;
+    public Admin(String username, String name) {
+        super(username, name);
     }
 
     public Admin() {
