@@ -1,8 +1,10 @@
 package com.rihavior.Bank_API_REST.services;
 
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountDTO;
+import com.rihavior.Bank_API_REST.entities.DTOs.TransactionDTO;
 import com.rihavior.Bank_API_REST.entities.accounts.*;
 import com.rihavior.Bank_API_REST.entities.users.ThirdParty;
+import com.rihavior.Bank_API_REST.entities.users.User;
 import com.rihavior.Bank_API_REST.others.Role;
 import com.rihavior.Bank_API_REST.repositories.*;
 import com.rihavior.Bank_API_REST.services.interfaces.AccountServiceInterface;
@@ -47,6 +49,9 @@ public class AccountService implements AccountServiceInterface {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    ThirdPartyRepository thirdPartyRepository;
 
     public Account createChecking(AccountDTO accountDTO) {
 
@@ -205,8 +210,49 @@ public class AccountService implements AccountServiceInterface {
     }
 
     public ThirdParty createThirdParty(ThirdParty thirdParty){
+        userRepository.save(thirdParty);
+        roleRepository.save(new Role("THIRD", userRepository.findByUsername(thirdParty.getUserName()).get()));
+        return thirdParty;
+    }
 
-        return userRepository.save(thirdParty);
+    public Transaction thirdTransfer(TransactionDTO transactionDTO) {
+
+        Transaction transaction = new Transaction();
+
+        User thirdParty = userRepository.findByUsername(transactionDTO.getUsername()).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The given username doesn't exist.")
+        );
+
+        transaction.setUsername(thirdParty.getUserName());
+
+        Account destiny = accountRepository.findById(transactionDTO.getFinalAccountId()).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.NO_CONTENT, "The final account doesn't exist.")
+        );
+
+        transaction.setFinalAccountId(transactionDTO.getFinalAccountId());
+
+        if (destiny.getBalance().getAmount().compareTo(transactionDTO.getAmount()) < 0){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not enough Funds");
+        }
+
+        transaction.setAmount(transactionDTO.getAmount());
+
+        if (transactionDTO.getAmount().compareTo(new BigDecimal(0)) < 0){
+            destiny.getBalance().decreaseAmount(transactionDTO.getAmount());
+        } else {
+            destiny.getBalance().increaseAmount(transactionDTO.getAmount());
+        }
+
+        if (destiny instanceof Checking){
+            if (destiny.getBalance().getAmount().compareTo(((Checking) destiny).getMinimumBalance()) < 0){
+                destiny.getBalance().decreaseAmount(destiny.getPenaltyFee());
+            }
+        } else if (destiny instanceof Savings){
+            if (destiny.getBalance().getAmount().compareTo(((Savings) destiny).getMinimumBalance()) < 0){
+                destiny.getBalance().decreaseAmount(destiny.getPenaltyFee());
+            }
+        }
+        return transactionRepository.save(transaction);
     }
 
     public Transaction transferFunds(Transaction transaction) {
@@ -247,6 +293,9 @@ public class AccountService implements AccountServiceInterface {
                 origin.getBalance().decreaseAmount(origin.getPenaltyFee());
             }
         }
+
+
+
         return transactionRepository.save(transaction);
     }
 
@@ -264,6 +313,7 @@ public class AccountService implements AccountServiceInterface {
         );
 
         account.setBalance(accountDTO.getBalance());
+        account.getBalance().decreaseAmount(accountDTO.getBalance());
 
         return accountRepository.save(account);
     }

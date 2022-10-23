@@ -1,6 +1,7 @@
 package com.rihavior.Bank_API_REST.services.interfaces;
 
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountDTO;
+import com.rihavior.Bank_API_REST.entities.DTOs.TransactionDTO;
 import com.rihavior.Bank_API_REST.entities.accounts.Transaction;
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihavior.Bank_API_REST.entities.accounts.Account;
@@ -23,6 +24,8 @@ public interface AccountServiceInterface {
     AccountHolder createAccountHolder(AccountHolderDTO accountHolderDTO);
 
     ThirdParty createThirdParty(ThirdParty thirdParty);
+
+    Transaction thirdTransfer(TransactionDTO transactionDTO);
 
     Transaction transferFunds(Transaction transaction);
 

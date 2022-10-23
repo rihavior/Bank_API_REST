@@ -19,7 +19,7 @@ public abstract class Account {
 
     @Embedded  //todo*******  No lleva @Embeddable, me daba problemas en la clase money
     @NotNull
-    @JsonIgnore
+//    @JsonIgnore
     private Money balance;
 
 //    @NotBlank
@@ -54,6 +54,7 @@ public abstract class Account {
     }
 
     public Account() {
+        this.penaltyFee = new BigDecimal(40);
     }
 
     public Money getBalance() {

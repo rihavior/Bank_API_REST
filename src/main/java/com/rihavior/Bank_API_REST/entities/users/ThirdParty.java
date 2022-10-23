@@ -1,5 +1,7 @@
 package com.rihavior.Bank_API_REST.entities.users;
 
+import com.rihavior.Bank_API_REST.others.HashCreator;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +16,9 @@ public class ThirdParty extends User{
 
     private String hashedKey;
 
-    public ThirdParty(String username, String name, String hashedKey) {
+    public ThirdParty(String username, String name) {
         super(username, name);
-        this.hashedKey = hashedKey;
+        this.hashedKey = HashCreator.generateString();
     }
 
     public ThirdParty() {
