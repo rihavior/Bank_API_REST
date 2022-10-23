@@ -5,6 +5,7 @@ import com.rihavior.Bank_API_REST.entities.accounts.Transaction;
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihavior.Bank_API_REST.entities.accounts.Account;
 import com.rihavior.Bank_API_REST.entities.users.AccountHolder;
+import com.rihavior.Bank_API_REST.entities.users.ThirdParty;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public interface AccountServiceInterface {
     Account createCreditCard(AccountDTO accountDTO);
 
     AccountHolder createAccountHolder(AccountHolderDTO accountHolderDTO);
+
+    ThirdParty createThirdParty(ThirdParty thirdParty);
 
     Transaction transferFunds(Transaction transaction);
 

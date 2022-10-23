@@ -5,6 +5,7 @@ import com.rihavior.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihavior.Bank_API_REST.entities.users.AccountHolder;
 import com.rihavior.Bank_API_REST.others.Address;
 import com.rihavior.Bank_API_REST.repositories.AccountHolderRepository;
+import com.rihavior.Bank_API_REST.repositories.RoleRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,9 @@ public class AccountHolderTest {
 
     @Autowired
     AccountHolderRepository accountHolderRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -49,6 +53,7 @@ public class AccountHolderTest {
 
     @AfterEach
     public void tearDown(){
+        roleRepository.deleteAll();
         accountHolderRepository.deleteAll();
     }
 
@@ -168,6 +173,8 @@ public class AccountHolderTest {
          * Esta ha sido la manera mas elegante de arreglarlo junto con
          * el try catch del service para gestionar todas las excepciones que pueda lanzar LocalDate.
          * Casi escribo los if para los dias por grupos de meses (31, 30, 28/29??)...  T.T
+         *
+         * No fui capaz de implementar el modulo para evitar el error
          */
     }
 }

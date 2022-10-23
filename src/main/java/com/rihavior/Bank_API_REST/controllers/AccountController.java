@@ -3,6 +3,7 @@ package com.rihavior.Bank_API_REST.controllers;
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountHolderDTO;
 import com.rihavior.Bank_API_REST.entities.accounts.Transaction;
+import com.rihavior.Bank_API_REST.entities.users.ThirdParty;
 import com.rihavior.Bank_API_REST.services.interfaces.AccountServiceInterface;
 import com.rihavior.Bank_API_REST.controllers.interfaces.AccountControllerInterface;
 import com.rihavior.Bank_API_REST.entities.accounts.Account;
@@ -55,6 +56,12 @@ public class AccountController implements AccountControllerInterface {
     @ResponseStatus(HttpStatus.CREATED)
     public AccountHolder createAccountHolder(@RequestBody AccountHolderDTO accountHolderDTO) {
         return accountService.createAccountHolder(accountHolderDTO);
+    }
+
+    @PostMapping("/create_third_party")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ThirdParty createThirdParty(@RequestBody ThirdParty thirdParty) {
+        return accountService.createThirdParty(thirdParty);
     }
 
     @PatchMapping("/transfer_funds")

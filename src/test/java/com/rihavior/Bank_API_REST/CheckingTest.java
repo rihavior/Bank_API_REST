@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihavior.Bank_API_REST.repositories.AccountHolderRepository;
 import com.rihavior.Bank_API_REST.repositories.CheckingRepository;
+import com.rihavior.Bank_API_REST.repositories.RoleRepository;
 import com.rihavior.Bank_API_REST.repositories.StudentCheckingRepository;
 import com.rihavior.Bank_API_REST.others.Address;
 import com.rihavior.Bank_API_REST.others.Money;
@@ -36,6 +37,9 @@ public class CheckingTest {
 
     @Autowired
     StudentCheckingRepository studentCheckingRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;

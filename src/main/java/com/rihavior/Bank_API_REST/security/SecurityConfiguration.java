@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                 .mvcMatchers(HttpMethod.POST,"/create_savings").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.POST,"/create_credit_card").hasRole("ADMIN")
                 .mvcMatchers(HttpMethod.POST,"/create_account_holder").hasRole("ADMIN")
-                .mvcMatchers(HttpMethod.PATCH,"/transfer_funds").hasAnyRole()
+                .mvcMatchers(HttpMethod.PATCH,"/transfer_funds").hasAnyRole("HOLDER", "ADMIN")
                 .mvcMatchers(HttpMethod.PATCH,"/modify_balance").hasRole("ADMIN")
                 .anyRequest().permitAll();
 

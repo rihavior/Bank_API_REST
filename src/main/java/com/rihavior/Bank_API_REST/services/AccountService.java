@@ -2,6 +2,7 @@ package com.rihavior.Bank_API_REST.services;
 
 import com.rihavior.Bank_API_REST.entities.DTOs.AccountDTO;
 import com.rihavior.Bank_API_REST.entities.accounts.*;
+import com.rihavior.Bank_API_REST.entities.users.ThirdParty;
 import com.rihavior.Bank_API_REST.others.Role;
 import com.rihavior.Bank_API_REST.repositories.*;
 import com.rihavior.Bank_API_REST.services.interfaces.AccountServiceInterface;
@@ -198,11 +199,15 @@ public class AccountService implements AccountServiceInterface {
 
         accountHolderRepository.save(accountHolder);
 
-//        roleRepository.save(new Role("HOLDER", accountHolder));
+        roleRepository.save(new Role("HOLDER", userRepository.findByUsername(accountHolder.getUserName()).get()));
 
         return accountHolder;
     }
 
+    public ThirdParty createThirdParty(ThirdParty thirdParty){
+
+        return userRepository.save(thirdParty);
+    }
 
     public Transaction transferFunds(Transaction transaction) {
 
