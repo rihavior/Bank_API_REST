@@ -2,6 +2,12 @@
 
 ## Spring Application to manage Users and Accounts in a simple Bank service.
 
+This app follows the next Use Case diagram and UML diagram.
+
+![Bank APIREST](https://user-images.githubusercontent.com/86107544/197540985-233d3c53-32dd-408e-bf1b-9e3d058a5014.png)
+
+![Bank APIREST (1)](https://user-images.githubusercontent.com/86107544/197544871-795f21df-96fc-4c38-9284-e638cdbcecb9.png)
+
 The requests accepted are:
 
 **GET:**
