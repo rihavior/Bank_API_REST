@@ -51,7 +51,7 @@ The requests accepted are:
     · Third party modify balance. Requires a transaction as body.
 
 
-All Users starts with the password "1234".
+All Users start with the password "1234", at this point, there is a missing request to update it.
 Swagger-UI dependency implemented. You can use a user-friendly interface to play a bit with the app throw the next link.
 
 
