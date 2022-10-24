@@ -58,7 +58,6 @@ public class AccountService implements AccountServiceInterface {
         Checking checking = new Checking();
         StudentChecking studentChecking = new StudentChecking();
 
-        //todo    ESTO HACE FALTA?
         checking.setSecondaryOwner(null);
         studentChecking.setSecondaryOwner(null);
 

@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface SavingsRepository extends JpaRepository<Savings, Long> {
-
     Optional<Savings> findByPrimaryOwnerUsername(String primaryOwnerUserName);
 
     Optional<Savings> findBySecondaryOwnerUsername(String secondaryOwnerUserName);

@@ -49,9 +49,6 @@ public class AccountHolder extends User {
         setAge();
         this.primaryAddress = primaryAddress;
         this.mailingAddress = mailingAddress;
-//        getRoles().add(new Role("HOLDER",this));
-//        setRoles(new HashSet<>(List.of(new Role("HOLDER", this))));
-
     }
 
     public AccountHolder() {

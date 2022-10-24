@@ -19,12 +19,7 @@ public abstract class Account {
 
     @Embedded  //todo*******  No lleva @Embeddable, me daba problemas en la clase money
     @NotNull
-//    @JsonIgnore
     private Money balance;
-
-//    @NotBlank
-//    @Column(unique = true)
-//    private String uniqueId;
 
     @ManyToOne
     @NotNull
@@ -100,12 +95,4 @@ public abstract class Account {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    public String getUniqueId() {
-//        return uniqueId;
-//    }
-//
-//    public void setUniqueId(String uniqueId) {
-//        this.uniqueId = uniqueId;
-//    }
 }

@@ -14,7 +14,6 @@ import java.time.Period;
 
 @Entity
 public class CreditCard extends Account{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,13 +43,10 @@ public class CreditCard extends Account{
         this.creditLimit = new BigDecimal(100);
     }
 
-
-
     public CreditCard() {
         this.interestRate = new BigDecimal("0.2");
         this.creditLimit = new BigDecimal(100);
     }
-
     @Override
     public Money getBalance() {
         if (Period.between(lastInterestApplied, LocalDate.now()).getMonths() > 0) {
@@ -65,7 +61,6 @@ public class CreditCard extends Account{
         }
         return super.getBalance();
     }
-
     public Long getId() {
         return id;
     }

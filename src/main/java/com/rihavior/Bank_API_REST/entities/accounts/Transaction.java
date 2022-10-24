@@ -22,6 +22,7 @@ public class Transaction {
     private Long finalAccountId;
 
 //    private LocalDateTime creationDate = LocalDateTime.now();
+//    PARA FRAUD
 
     public Transaction(BigDecimal amount, String username, Long originAccountId, Long finalAccountId) {
         this.amount = amount;

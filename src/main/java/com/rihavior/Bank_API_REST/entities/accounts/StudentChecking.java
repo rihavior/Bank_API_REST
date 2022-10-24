@@ -11,7 +11,6 @@ import javax.persistence.Id;
 
 @Entity
 public class StudentChecking extends Account{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

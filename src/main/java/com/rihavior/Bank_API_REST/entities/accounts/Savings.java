@@ -16,7 +16,6 @@ import java.time.Period;
 
 @Entity
 public class Savings extends Account{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

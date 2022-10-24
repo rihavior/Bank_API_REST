@@ -2,11 +2,12 @@ package com.rihavior.Bank_API_REST.others;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
 
-
+@Embeddable
 public class Money {
 
     private static final Currency USD = Currency.getInstance("USD");

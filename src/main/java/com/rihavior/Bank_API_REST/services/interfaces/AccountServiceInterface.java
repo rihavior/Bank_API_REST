@@ -12,9 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountServiceInterface {
-
-//    Account createChecking(double startingBalance, AccountHolder primaryOwner);
-
     Account createChecking(AccountDTO accountDTO);
 
     Account createSavings(AccountDTO accountDTO);

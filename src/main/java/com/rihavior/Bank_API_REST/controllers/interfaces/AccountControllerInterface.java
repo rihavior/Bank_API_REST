@@ -14,9 +14,6 @@ import java.util.Optional;
 
 public interface AccountControllerInterface {
 
-
-//    Account createChecking(double startingBalance, AccountHolder primaryOwner);
-
     Account createChecking(AccountDTO accountDTO);
 
     Account createSavings(AccountDTO accountDTO);
