@@ -87,10 +87,10 @@ public class BankApiRestApplication implements CommandLineRunner{
 		roleRepository.save(new Role("ADMIN",admin));
 
 
-//		Checking checking = new Checking(new Money(new BigDecimal(1000)), owner1_Test);
-//
-//		checkingRepository.save(checking);
-//
+		Checking checking = new Checking(new Money(new BigDecimal(1000)), owner1_Test);
+
+		checkingRepository.save(checking);
+
 //		Savings savings = new Savings(new Money(new BigDecimal("1000")),user);
 //
 //		savingsRepository.save(savings);
