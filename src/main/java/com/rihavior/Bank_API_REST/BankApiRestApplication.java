@@ -60,33 +60,33 @@ public class BankApiRestApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 
-//		Address testAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
-//
-//		Address testMailingAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
-//
-//		owner1_Test = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,testMailingAddress);
-//
-//		owner2_Test = new AccountHolder("paqito", "Paco", LocalDate.of(1961,1,1), testAddress,testMailingAddress);
-//
-//		owner3_Test = new AccountHolder("laurita", "Laura", LocalDate.of(2002,1,1), testAddress,testMailingAddress);
-//
-//		admin = new Admin("admin","admin");
-//
-//		adminRepository.save(admin);
-//
-//		accountHolderRepository.save(owner1_Test);
-//
-//		accountHolderRepository.save(owner2_Test);
-//
-//		accountHolderRepository.save(owner3_Test);
-//
-//		roleRepository.save(new Role("HOLDER",owner1_Test));
-//		roleRepository.save(new Role("HOLDER",owner2_Test));
-//		roleRepository.save(new Role("HOLDER",owner3_Test));
-//		roleRepository.save(new Role("HOLDER",admin));
-//		roleRepository.save(new Role("ADMIN",admin));
-//
-//
+		Address testAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
+
+		Address testMailingAddress = new Address("Diagonal", 1000, 8051,"Bcn","Esp");
+
+		owner1_Test = new AccountHolder("rihavior", "Ricardo", LocalDate.of(1990,4,26), testAddress,testMailingAddress);
+
+		owner2_Test = new AccountHolder("paqito", "Paco", LocalDate.of(1961,1,1), testAddress,testMailingAddress);
+
+		owner3_Test = new AccountHolder("laurita", "Laura", LocalDate.of(2002,1,1), testAddress,testMailingAddress);
+
+		admin = new Admin("admin","admin");
+
+		adminRepository.save(admin);
+
+		accountHolderRepository.save(owner1_Test);
+
+		accountHolderRepository.save(owner2_Test);
+
+		accountHolderRepository.save(owner3_Test);
+
+		roleRepository.save(new Role("HOLDER",owner1_Test));
+		roleRepository.save(new Role("HOLDER",owner2_Test));
+		roleRepository.save(new Role("HOLDER",owner3_Test));
+		roleRepository.save(new Role("HOLDER",admin));
+		roleRepository.save(new Role("ADMIN",admin));
+
+
 //		Checking checking = new Checking(new Money(new BigDecimal(1000)), owner1_Test);
 //
 //		checkingRepository.save(checking);
