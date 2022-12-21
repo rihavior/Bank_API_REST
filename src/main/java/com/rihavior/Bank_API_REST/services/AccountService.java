@@ -187,6 +187,14 @@ public class AccountService implements AccountServiceInterface {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The UserName: " + accountHolderDTO.getUserName() + ", already exists.");
         } accountHolder.setUserName(accountHolderDTO.getUserName());
 
+
+        /**
+         * Implement LocalDate parameter class on AccountHolder entity
+         *
+         * Test will crash! Mockmvc to test using LocalDate. (remember Max Bank API)
+         *
+         */
+
         try{
             accountHolder.setDateOfBirth(LocalDate.of(accountHolderDTO.getBirthYear(),accountHolderDTO.getBirthMonth(),accountHolderDTO.getBirthDay()));
         } catch (Exception e){
